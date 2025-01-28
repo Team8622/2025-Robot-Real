@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Coral_Intake;
 import frc.robot.subsystems.ElevatorChain;
 
 public class ChainAnalog extends Command{
