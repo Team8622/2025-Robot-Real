@@ -5,7 +5,10 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.MathUtil;
 //import com.ctre.phoenix.sensors.CANCoderStatusFrame;
@@ -89,16 +92,19 @@ public class SwerveModule {
       ShuffleboardLayout container
       ) {
 
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.smartCurrentLimit(35);
+
         m_driveMotor = new SparkMax(driveMotorChannel, MotorType.kBrushless);
         m_turningMotor = new SparkMax(turningMotorChannel, MotorType.kBrushless);
 
-        m_turningMotor.setSmartCurrentLimit(35);
-        m_driveMotor.setSmartCurrentLimit(35);
+        m_turningMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_driveMotor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         //presetEncoders();
-        m_turnEncoder = new DutyCycleEncoder(turningEncoderChannel);
+        m_turnEncoder = new DutyCycleEncoder(turningEncoderChannel, 1, 0);
         //m_turnPIDController.enableContinuousInput(-180.0, 180.0);
-        m_turnEncoder.setDistancePerRotation(1);
+        // m_turnEncoder.setDistancePerRotation(1);
         //m_turnEncoder.setPositionOffset(angleZero/360);
         m_turnPIDController.enableContinuousInput(-Math.PI,Math.PI);
         
@@ -116,7 +122,7 @@ public class SwerveModule {
     
   }
   public double getEncoderRadians(){
-    return (Math.PI*2)*(MathUtil.inputModulus(m_turnEncoder.getAbsolutePosition()-(angleOffest/360), -0.5, 0.5))*-1;
+    return (Math.PI*2)*(MathUtil.inputModulus(m_turnEncoder.get()-(angleOffest/360), -0.5, 0.5))*-1;
   }
 
   /**
@@ -182,8 +188,8 @@ public class SwerveModule {
   @Deprecated
   /** Zeros all the SwerveModule encoders. */
   public void resetEncoders() {
-      m_turnEncoder.reset();
-      // m_driveMotor.getEncoder().setPosition(0);
+      //m_turnEncoder.reset();
+      m_driveMotor.getEncoder().setPosition(0);
   }
       
   public void periodic_func() {
