@@ -5,6 +5,7 @@
 package frc.robot;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleConsumer;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -17,7 +18,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -94,25 +97,45 @@ public class RobotContainer {
 
 		m_chooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData(m_chooser);
-    //register pathplanner commands
+    //registering pathplanner commands 
     NamedCommands.registerCommand("coralExtake", coralExtake());
     NamedCommands.registerCommand("coralIntake", coralIntake());
     NamedCommands.registerCommand("coralStop", coralStop());
-
+    NamedCommands.registerCommand("algaeIntake", algaeIntake());
+    NamedCommands.registerCommand("algaeExtake", algaeExtake());
+    NamedCommands.registerCommand("algaeStop", algaeStop());
+		
+    // Configure the button bindings
 		configureButtonBindings();
-		// Configure the button bindings
-
 	}
-  //return commands for pathplanner
+
+  //Returns subsystem methods as COMMANDS for pathplanner use 
+  //CORAL
   public Command coralExtake(){
     return m_intake.startCommand(IntakeConstants.outSpeed);
   }
+
   public Command coralIntake(){
     return m_intake.startCommand(IntakeConstants.inSpeed);
   }
+
   public Command coralStop(){
     return m_intake.stopCommand();
   }
+
+  //ALGAE
+  public Command algaeIntake(){
+    return m_algae.startCommand(AlgaeConstants.vacuum);
+  }
+
+  public Command algaeExtake(){
+    return m_algae.startCommand(AlgaeConstants.spitup);
+  }
+
+  public Command algaeStop(){
+    return m_algae.stopCommand();
+  }
+
 
   //SmartDashboard command selecter
 	public Command getAutonomousCommand() {
