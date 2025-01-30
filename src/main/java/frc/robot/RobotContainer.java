@@ -7,6 +7,7 @@ package frc.robot;
 import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -93,12 +94,27 @@ public class RobotContainer {
 
 		m_chooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData(m_chooser);
+    //register pathplanner commands
+    NamedCommands.registerCommand("coralExtake", coralExtake());
+    NamedCommands.registerCommand("coralIntake", coralIntake());
+    NamedCommands.registerCommand("coralStop", coralStop());
 
 		configureButtonBindings();
 		// Configure the button bindings
 
 	}
+  //return commands for pathplanner
+  public Command coralExtake(){
+    return m_intake.startCommand(IntakeConstants.outSpeed);
+  }
+  public Command coralIntake(){
+    return m_intake.startCommand(IntakeConstants.inSpeed);
+  }
+  public Command coralStop(){
+    return m_intake.stopCommand();
+  }
 
+  //SmartDashboard command selecter
 	public Command getAutonomousCommand() {
 		return m_chooser.getSelected();
 	}
