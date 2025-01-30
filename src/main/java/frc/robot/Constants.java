@@ -67,9 +67,9 @@ public final class Constants {
         public static final int kRearRightTurningMotorPort = 7;
 
     
-        public static final int kFrontLeftTurningEncoderPort = 3;
-        public static final int kRearLeftTurningEncoderPort = 1;
-        public static final int kFrontRightTurningEncoderPort = 2;
+        public static final int kFrontLeftTurningEncoderPort = 1;
+        public static final int kRearLeftTurningEncoderPort = 2;
+        public static final int kFrontRightTurningEncoderPort = 3;
         public static final int kRearRightTurningEncoderPort = 0;
     
 
