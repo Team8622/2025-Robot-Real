@@ -25,15 +25,12 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 public final class Constants {
 
     public static final class CANConstants {
-        public static final int intakeSushi = 9;
-        public static final int intakeMain = 10;
-        public static final int feederLead = 11;
-        public static final int feederFollow = 12;
-        public static final int flyLead = 13;
-        public static final int flyFollow = 14;
+		public static final int intakeMain = 9;
+        public static final int intakeSushi = 10;
+        public static final int algaeLead = 11;
+        public static final int algaeFollow = 12;
         public static final int armsMain = 15;
         public static final int armsFollow = 16;
-
     }
 
     public static final class ElevatorConstants{

@@ -49,7 +49,7 @@ public class Algae_Intake extends SubsystemBase{
 
   public void init(){
     //initialize all the things
-    m_lead = new SparkMax(CANConstants.intakeMain, MotorType.kBrushless);
+    m_lead = new SparkMax(CANConstants.algaeLead, MotorType.kBrushless);
     //configure spark maxes
     SparkMaxConfig m_lead_config = new SparkMaxConfig();
     m_lead_config
@@ -57,7 +57,7 @@ public class Algae_Intake extends SubsystemBase{
     .idleMode(IdleMode.kCoast);
     m_lead.configure(m_lead_config, ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
 
-    m_feeder = new SparkMax(CANConstants.intakeSushi, MotorType.kBrushless);
+    m_feeder = new SparkMax(CANConstants.algaeFollow, MotorType.kBrushless);
     SparkMaxConfig m_feeder_config = new SparkMaxConfig();
     m_feeder_config
     .inverted(true)
