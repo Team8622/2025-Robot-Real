@@ -56,19 +56,19 @@ public final class Constants {
     public static final class DriveConstants {
         //This all needs to be changed
 
-        public static final int kFrontLeftDriveMotorPort = 7;//4
-        public static final int kRearLeftDriveMotorPort = 5;
-        public static final int kFrontRightDriveMotorPort = 1;
-        public static final int kRearRightDriveMotorPort = 4; //7
+        public static final int kFrontLeftDriveMotorPort = 4;
+        public static final int kRearLeftDriveMotorPort = 2;
+        public static final int kFrontRightDriveMotorPort = 6;
+        public static final int kRearRightDriveMotorPort = 8;
     
-        public static final int kFrontLeftTurningMotorPort = 8;
-        public static final int kRearLeftTurningMotorPort = 6;
-        public static final int kFrontRightTurningMotorPort = 2;
-        public static final int kRearRightTurningMotorPort = 3;//8
+        public static final int kFrontLeftTurningMotorPort = 3;
+        public static final int kRearLeftTurningMotorPort = 1;
+        public static final int kFrontRightTurningMotorPort = 5;
+        public static final int kRearRightTurningMotorPort = 7;
 
     
-        public static final int kFrontLeftTurningEncoderPort = 3; //0
-        public static final int kRearLeftTurningEncoderPort = 1;//1,2,3
+        public static final int kFrontLeftTurningEncoderPort = 3;
+        public static final int kRearLeftTurningEncoderPort = 1;
         public static final int kFrontRightTurningEncoderPort = 2;
         public static final int kRearRightTurningEncoderPort = 0;
     
