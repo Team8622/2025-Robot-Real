@@ -20,10 +20,9 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
-public class DriveSubsystem extends SubsystemBase {
+public class DriveSubsystem extends GenericSubsystem {
 	// The gyro sensor
 	// public final Gyro m_gyro = new AHRS(SPI.Port.kMXP);
 	public final AHRS m_ahrs = new AHRS(AHRS.NavXComType.kMXP_SPI);

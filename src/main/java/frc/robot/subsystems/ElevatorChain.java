@@ -9,10 +9,9 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANConstants;
 
-public class ElevatorChain extends SubsystemBase {
+public class ElevatorChain extends GenericSubsystem {
     
     public SparkMax m_leadMotor;
     public SparkMax m_followMotor;

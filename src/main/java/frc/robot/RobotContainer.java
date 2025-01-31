@@ -32,6 +32,7 @@ import frc.robot.Constants.IntakeConstants;
 //import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AlgaeAnalog;
 import frc.robot.commands.ChainAnalog;
+import frc.robot.commands.GenericCommand;
 //import frc.robot.commands.GondolaState;
 import frc.robot.commands.IntakeAnalog;
 import frc.robot.commands.auton.Full.DriveBackward;
@@ -87,8 +88,8 @@ public class RobotContainer {
 	// JoystickButton turnOnButton = new JoystickButton(controller, 3);
 
 	public final SendableChooser<Command> m_chooser;
-  
-//JoystickButton turnOnButton = new JoystickButton(controller, 3);
+
+	// JoystickButton turnOnButton = new JoystickButton(controller, 3);
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -97,47 +98,19 @@ public class RobotContainer {
 
 		m_chooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData(m_chooser);
-    //registering pathplanner commands 
-    NamedCommands.registerCommand("coralExtake", coralExtake());
-    NamedCommands.registerCommand("coralIntake", coralIntake());
-    NamedCommands.registerCommand("coralStop", coralStop());
-    NamedCommands.registerCommand("algaeIntake", algaeIntake());
-    NamedCommands.registerCommand("algaeExtake", algaeExtake());
-    NamedCommands.registerCommand("algaeStop", algaeStop());
-		
-    // Configure the button bindings
+		// registering pathplanner commands
+		NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
+		NamedCommands.registerCommand("coralIntake", new GenericCommand(m_intake, IntakeConstants.inSpeed));
+		NamedCommands.registerCommand("coralStop", new GenericCommand(m_intake, 0));
+		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
+		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
+		NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
+
+		// Configure the button bindings
 		configureButtonBindings();
 	}
 
-  //Returns subsystem methods as COMMANDS for pathplanner use 
-  //CORAL
-  public Command coralExtake(){
-    return m_intake.startCommand(IntakeConstants.outSpeed);
-  }
-
-  public Command coralIntake(){
-    return m_intake.startCommand(IntakeConstants.inSpeed);
-  }
-
-  public Command coralStop(){
-    return m_intake.stopCommand();
-  }
-
-  //ALGAE
-  public Command algaeIntake(){
-    return m_algae.startCommand(AlgaeConstants.vacuum);
-  }
-
-  public Command algaeExtake(){
-    return m_algae.startCommand(AlgaeConstants.spitup);
-  }
-
-  public Command algaeStop(){
-    return m_algae.stopCommand();
-  }
-
-
-  //SmartDashboard command selecter
+	// SmartDashboard command selecter
 	public Command getAutonomousCommand() {
 		return m_chooser.getSelected();
 	}

@@ -21,10 +21,9 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 //import edu.wpi.fir077655 t.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANConstants;
 
-public class Algae_Intake extends SubsystemBase{
+public class Algae_Intake extends GenericSubsystem {
   
   public SparkMax m_lead;
   public SparkMax m_feeder;
