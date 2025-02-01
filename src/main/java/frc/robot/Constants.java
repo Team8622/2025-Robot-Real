@@ -34,8 +34,8 @@ public final class Constants {
     }
 
     public static final class ElevatorConstants{
-        public static final double up = 0.2;
-        public static final double down = -.2;
+        public static final double lowest = 0;
+        public static final double start = 1;
     }
     
 
