@@ -5,18 +5,17 @@ import frc.robot.subsystems.ElevatorChain;
 
 public class ChainAnalog extends Command{
     ElevatorChain m_chain;
-    double setSpeed;
+    double setGoal;
     
-    public ChainAnalog(ElevatorChain chain, double speed){
+    public ChainAnalog(ElevatorChain chain, double goal){
         m_chain = chain;
-        setSpeed = speed;
+        setGoal = goal;
         addRequirements(m_chain);
     }   
     
     @Override
     public void initialize(){
-        m_chain.start(setSpeed);
-
+        m_chain.start(setGoal);
     }
 
     @Override
