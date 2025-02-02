@@ -11,6 +11,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANConstants;
+import frc.robot.Constants.ElevatorConstants;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 public class ElevatorChain extends SubsystemBase {
@@ -93,24 +94,38 @@ public class ElevatorChain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Elevator Lebel", elevatorLevel);
+    SmartDashboard.putNumber("Elevator Label", elevatorLevel);
     if(isOn){
       m_leadMotor.setVoltage(controlLoop(this.getDistance(), Units.inchesToMeters(goal)));
       m_followMotor.setVoltage(-1 * controlLoop(this.getDistance(), Units.inchesToMeters(goal)));
     }
   }
 
-  public void start(double position){
-    elevatorLevel = 1; // placeholder for now
-    goal = position; // in meters
+  public void start(double level){
+    if (level == 1){
+    goal = ElevatorConstants.L1;
+    elevatorLevel = 1;
+    }
+    else if(level == 2){
+      goal = ElevatorConstants.L2;
+      elevatorLevel = 2;
+    }
+    else if(level == 3){
+      goal = ElevatorConstants.L3;
+      elevatorLevel = 3;
+    }
+    else if(level == 4){
+      goal = ElevatorConstants.L4;
+      elevatorLevel = 4;
+    }
+    else {
+      goal = 0;
+      elevatorLevel = 0;
+    }
     isOn = true;
   }
 
   public void stop(){
-
-    m_leadMotor.setVoltage(controlLoop(this.getDistance(), Units.inchesToMeters(0)));
-    m_followMotor.setVoltage(-1 * controlLoop(this.getDistance(), Units.inchesToMeters(0)));
-
     isOn=false;
   }
 }

@@ -34,8 +34,12 @@ public final class Constants {
     }
 
     public static final class ElevatorConstants{
-        public static final double lowest = 0;
-        public static final double start = 1;
+        // levels in meters off the ground
+        public static final double distanceFromGround = .33; //placeholder, measure distance from motor to the ground
+        public static final double L1 = .46 - distanceFromGround;
+        public static final double L2 = .81 - distanceFromGround;
+        public static final double L3 = 1.21 - distanceFromGround;
+        public static final double L4 = 1.83 - distanceFromGround;
     }
     
 

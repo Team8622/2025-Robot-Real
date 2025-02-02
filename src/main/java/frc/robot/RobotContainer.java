@@ -201,8 +201,8 @@ public class RobotContainer {
 		controller.b().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // red (2) -> manny extake
 		controller.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
 		controller.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
-		controller.leftTrigger().whileTrue(new ChainAnalog(m_chain, ElevatorConstants.up));
-		controller.rightTrigger().whileTrue(new ChainAnalog(m_chain, ElevatorConstants.down));
+		controller.leftTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel -1));
+		controller.rightTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel +1));
 
 		// driver.y().onTrue(new ShooterAnalog(m_kobe, ShooterConstants.layup));
 		// driver.x().onTrue(new ShooterAnalog(m_kobe, 0));
