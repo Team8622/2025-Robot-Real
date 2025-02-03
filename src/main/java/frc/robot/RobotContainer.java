@@ -88,8 +88,8 @@ public class RobotContainer {
 	// JoystickButton turnOnButton = new JoystickButton(controller, 3);
 
 	public final SendableChooser<Command> m_chooser;
-  
-//JoystickButton turnOnButton = new JoystickButton(controller, 3);
+
+	// JoystickButton turnOnButton = new JoystickButton(controller, 3);
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -98,47 +98,67 @@ public class RobotContainer {
 
 		m_chooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData(m_chooser);
-    //registering pathplanner commands 
-    NamedCommands.registerCommand("coralExtake", coralExtake());
-    NamedCommands.registerCommand("coralIntake", coralIntake());
-    NamedCommands.registerCommand("coralStop", coralStop());
-    NamedCommands.registerCommand("algaeIntake", algaeIntake());
-    NamedCommands.registerCommand("algaeExtake", algaeExtake());
-    NamedCommands.registerCommand("algaeStop", algaeStop());
-		
-    // Configure the button bindings
+		// registering pathplanner commands
+		NamedCommands.registerCommand("coralExtake", coralExtake());
+		NamedCommands.registerCommand("coralIntake", coralIntake());
+		NamedCommands.registerCommand("coralStop", coralStop());
+		NamedCommands.registerCommand("algaeIntake", algaeIntake());
+		NamedCommands.registerCommand("algaeExtake", algaeExtake());
+		NamedCommands.registerCommand("algaeStop", algaeStop());
+
+		// Configure the button bindings
 		configureButtonBindings();
 	}
 
-  //Returns subsystem methods as COMMANDS for pathplanner use 
-  //CORAL
-  public Command coralExtake(){
-    return m_intake.startCommand(IntakeConstants.outSpeed);
-  }
+	// Returns subsystem methods as COMMANDS for pathplanner use
+	// CORAL
+	public Command coralExtake() {
+		return m_intake.startCommand(IntakeConstants.outSpeed);
+	}
 
-  public Command coralIntake(){
-    return m_intake.startCommand(IntakeConstants.inSpeed);
-  }
+	public Command coralIntake() {
+		return m_intake.startCommand(IntakeConstants.inSpeed);
+	}
 
-  public Command coralStop(){
-    return m_intake.stopCommand();
-  }
+	public Command coralStop() {
+		return m_intake.stopCommand();
+	}
 
-  //ALGAE
-  public Command algaeIntake(){
-    return m_algae.startCommand(AlgaeConstants.vacuum);
-  }
+	// ALGAE
+	public Command algaeIntake() {
+		return m_algae.startCommand(AlgaeConstants.vacuum);
+	}
 
-  public Command algaeExtake(){
-    return m_algae.startCommand(AlgaeConstants.spitup);
-  }
+	public Command algaeExtake() {
+		return m_algae.startCommand(AlgaeConstants.spitup);
+	}
 
-  public Command algaeStop(){
-    return m_algae.stopCommand();
-  }
+	public Command algaeStop() {
+		return m_algae.stopCommand();
+	}
 
+	// ELEVATOR
+	public Command elevatorL1() {
+		return m_chain.setLevelCommand(1);
+	}
 
-  //SmartDashboard command selecter
+	public Command elevatorL2() {
+		return m_chain.setLevelCommand(2);
+	}
+
+	public Command elevatorL3() {
+		return m_chain.setLevelCommand(3);
+	}
+
+	public Command elevatorL4() {
+		return m_chain.setLevelCommand(4);
+	}
+
+	public Command elevatorBottom() {
+		return m_chain.setLevelCommand(0);
+	}
+
+	// SmartDashboard command selecter
 	public Command getAutonomousCommand() {
 		return m_chooser.getSelected();
 	}
@@ -202,8 +222,8 @@ public class RobotContainer {
 		controller.b().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // red (2) -> manny extake
 		controller.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
 		controller.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
-		controller.leftTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel-1));
-		controller.rightTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel +1));
+		controller.leftTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel - 1));
+		controller.rightTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel + 1));
 		controller.leftBumper().whileTrue(new HomeElevator(m_chain));
 		// driver.y().onTrue(new ShooterAnalog(m_kobe, ShooterConstants.layup));
 		// driver.x().onTrue(new ShooterAnalog(m_kobe, 0));

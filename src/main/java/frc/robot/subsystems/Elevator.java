@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -11,6 +12,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
@@ -32,7 +34,6 @@ public class Elevator extends SubsystemBase {
     double currentPos;
     public int elevatorLevel = 0;
 
-
     public enum ElevatorPosition {
         DOWN(0),
         POSITION_1(ElevatorConstants.L1),
@@ -41,24 +42,26 @@ public class Elevator extends SubsystemBase {
         POSITION_4(ElevatorConstants.L4);
 
         public final double positionInches;
-        
+
         ElevatorPosition(double positionInches) {
             this.positionInches = positionInches;
         }
+
         public double getPositionInches() {
             return positionInches;
         }
     }
-    public Elevator(){
+
+    public Elevator() {
         primaryMotor = new SparkMax(ElevatorConstants.elevatorLead, MotorType.kBrushless);
         followerMotor = new SparkMax(ElevatorConstants.elevatorFollow, MotorType.kBrushless);
-        
+
         SparkMaxConfig followerConfig = new SparkMaxConfig();
         followerConfig.follow(primaryMotor, false);
 
         // Configure follower
-        followerMotor.configure(followerConfig, null, null); 
-        
+        followerMotor.configure(followerConfig, null, null);
+
         encoder = primaryMotor.getEncoder();
         bottomLimit = new DigitalInput(ElevatorConstants.limitSwitchPort);
 
@@ -67,30 +70,28 @@ public class Elevator extends SubsystemBase {
         resetConfig.voltageCompensation(12.0);
 
         constraints = new TrapezoidProfile.Constraints(
-            ElevatorConstants.maxVelocity,
-            ElevatorConstants.maxAcceleration
-        );
-        
+                ElevatorConstants.maxVelocity,
+                ElevatorConstants.maxAcceleration);
+
         pidController = new PIDController(
-            ElevatorConstants.kP,
-            ElevatorConstants.kI,
-            ElevatorConstants.kD
-        );
-        
+                ElevatorConstants.kP,
+                ElevatorConstants.kI,
+                ElevatorConstants.kD);
+
         pidController.setTolerance(0.5); // 0.5 inches position tolerance
-        
+
         // Initialize states and profile
         currentState = new TrapezoidProfile.State(0, 0);
         goalState = new TrapezoidProfile.State(0, 0);
         profile = new TrapezoidProfile(constraints);
-        
+
         configureMotors();
     }
 
     private void configureMotors() {
         // Primary motor configuration
         primaryMotor.configure(resetConfig, ResetMode.kResetSafeParameters, null);
-        
+
         // Follower motor configuration
         primaryMotor.configure(resetConfig, ResetMode.kResetSafeParameters, null);
     }
@@ -99,7 +100,7 @@ public class Elevator extends SubsystemBase {
     public void periodic() {
 
         currentPos = encoder.getPosition() / ElevatorConstants.countsPerInch;
-        
+
         // Calculate the next state and update current state
         currentState = profile.calculate(0.020, currentState, goalState); // 20ms control loop
 
@@ -115,13 +116,12 @@ public class Elevator extends SubsystemBase {
         if (isHomed) {
             double pidOutput = pidController.calculate(getHeightInches(), currentState.position);
             double ff = calculateFeedForward(currentState);
-            
+
             double outputPower = MathUtil.clamp(
-                pidOutput + ff,
-                -ElevatorConstants.max_output,
-                ElevatorConstants.max_output
-            );
-            
+                    pidOutput + ff,
+                    -ElevatorConstants.max_output,
+                    ElevatorConstants.max_output);
+
             primaryMotor.set(outputPower);
         }
 
@@ -146,16 +146,15 @@ public class Elevator extends SubsystemBase {
 
     public boolean isAtHeight(double targetHeightInches) {
         // Check if the elevator is within a small tolerance of the target height
-        return pidController.atSetpoint() && 
-               Math.abs(getHeightInches() - targetHeightInches) < ElevatorConstants.posTolerance;
+        return pidController.atSetpoint() &&
+                Math.abs(getHeightInches() - targetHeightInches) < ElevatorConstants.posTolerance;
     }
-    
 
     private double calculateFeedForward(TrapezoidProfile.State state) {
         // kS (static friction), kG (gravity), kV (velocity),
         return ElevatorConstants.kS * Math.signum(state.velocity) +
-               ElevatorConstants.kG +
-               ElevatorConstants.kV * state.velocity;
+                ElevatorConstants.kG +
+                ElevatorConstants.kV * state.velocity;
     }
 
     public void setPositionInches(double inches) {
@@ -165,11 +164,10 @@ public class Elevator extends SubsystemBase {
         }
 
         setpoint = MathUtil.clamp(
-            inches,
-            ElevatorConstants.minPos,
-            ElevatorConstants.maxPos
-        );
-        
+                inches,
+                ElevatorConstants.minPos,
+                ElevatorConstants.maxPos);
+
         // Update goal state for motion profile
         goalState = new TrapezoidProfile.State(setpoint, 0);
     }
@@ -195,8 +193,8 @@ public class Elevator extends SubsystemBase {
     }
 
     public boolean isAtPosition(ElevatorPosition position) {
-        return pidController.atSetpoint() && 
-               Math.abs(getHeightInches() - position.positionInches) < 0.5;
+        return pidController.atSetpoint() &&
+                Math.abs(getHeightInches() - position.positionInches) < 0.5;
     }
 
     public boolean isHomed() {
@@ -212,40 +210,44 @@ public class Elevator extends SubsystemBase {
         pidController.reset();
         currentState = new TrapezoidProfile.State(getHeightInches(), 0);
         goalState = new TrapezoidProfile.State(getHeightInches(), 0);
-        
+
         if (!isHomed && power < 0) {
             power = 0;
         }
-        
+
         if (getHeightInches() >= ElevatorConstants.maxPos && power > 0) {
             power = 0;
         }
-        
+
         if (bottomLimit.get() && power < 0) {
             power = 0;
         }
-        
+
         primaryMotor.set(MathUtil.clamp(power, -ElevatorConstants.max_output, ElevatorConstants.max_output));
     }
 
-    public void setLevel(int level){
+    public void setLevel(int level) {
         // Array of elevator positions in inches corresponding to each level
         ElevatorPosition[] levels = {
-            ElevatorPosition.DOWN,
-            ElevatorPosition.POSITION_1,
-            ElevatorPosition.POSITION_2,
-            ElevatorPosition.POSITION_3,
-            ElevatorPosition.POSITION_4
+                ElevatorPosition.DOWN,
+                ElevatorPosition.POSITION_1,
+                ElevatorPosition.POSITION_2,
+                ElevatorPosition.POSITION_3,
+                ElevatorPosition.POSITION_4
         };
         // Ensure the level is within the valid range (1 to 4)
         if (level >= 1 && level <= 4) {
-            setPositionInches(levels[level].getPositionInches());  // Convert level to index (1 -> index 1)
+            setPositionInches(levels[level].getPositionInches()); // Convert level to index (1 -> index 1)
             elevatorLevel = level;
             currentTarget = levels[level];
         } else {
             // Default to bottom position if the level is not valid
-            setPositionInches(levels[0].getPositionInches());  // Use index 0 (bottom)
+            setPositionInches(levels[0].getPositionInches()); // Use index 0 (bottom)
             elevatorLevel = 0;
         }
+    }
+
+    public Command setLevelCommand(int level) {
+        return this.run(() -> setLevel(level));
     }
 }
