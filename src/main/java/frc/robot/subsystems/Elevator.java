@@ -45,6 +45,9 @@ public class Elevator extends SubsystemBase {
         ElevatorPosition(double positionInches) {
             this.positionInches = positionInches;
         }
+        public double getPositionInches() {
+            return positionInches;
+        }
     }
     public Elevator(){
         primaryMotor = new SparkMax(ElevatorConstants.elevatorLead, MotorType.kBrushless);
@@ -225,22 +228,23 @@ public class Elevator extends SubsystemBase {
         primaryMotor.set(MathUtil.clamp(power, -ElevatorConstants.max_output, ElevatorConstants.max_output));
     }
 
-    public void setLevel(double level){
+    public void setLevel(int level){
         // Array of elevator positions in inches corresponding to each level
-        double[] levels = {
-            ElevatorConstants.bottomPos,  // Index 0 for bottom
-            ElevatorConstants.L1,         // Index 1 for Level 1
-            ElevatorConstants.L2,         // Index 2 for Level 2
-            ElevatorConstants.L3,         // Index 3 for Level 3
-            ElevatorConstants.L4          // Index 4 for Level 4
+        ElevatorPosition[] levels = {
+            ElevatorPosition.DOWN,
+            ElevatorPosition.POSITION_1,
+            ElevatorPosition.POSITION_2,
+            ElevatorPosition.POSITION_3,
+            ElevatorPosition.POSITION_4
         };
         // Ensure the level is within the valid range (1 to 4)
         if (level >= 1 && level <= 4) {
-            setPositionInches(levels[(int)level]);  // Convert level to index (1 -> index 1)
-            elevatorLevel = (int)level;
+            setPositionInches(levels[level].getPositionInches());  // Convert level to index (1 -> index 1)
+            elevatorLevel = level;
+            currentTarget = levels[level];
         } else {
             // Default to bottom position if the level is not valid
-            setPositionInches(levels[0]);  // Use index 0 (bottom)
+            setPositionInches(levels[0].getPositionInches());  // Use index 0 (bottom)
             elevatorLevel = 0;
         }
     }

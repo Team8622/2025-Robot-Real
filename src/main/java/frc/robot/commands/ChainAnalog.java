@@ -5,9 +5,9 @@ import frc.robot.subsystems.Elevator;
 
 public class ChainAnalog extends Command{
     Elevator m_chain;
-    double setLevel;
+    int setLevel;
 
-    public ChainAnalog(Elevator chain, double level){
+    public ChainAnalog(Elevator chain, int level){
         m_chain = chain;
         setLevel = level;
         addRequirements(m_chain);
