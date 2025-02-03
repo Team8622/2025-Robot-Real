@@ -32,6 +32,7 @@ import frc.robot.Constants.IntakeConstants;
 //import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AlgaeAnalog;
 import frc.robot.commands.ChainAnalog;
+import frc.robot.commands.HomeElevator;
 //import frc.robot.commands.GondolaState;
 import frc.robot.commands.IntakeAnalog;
 import frc.robot.commands.auton.Full.DriveBackward;
@@ -49,7 +50,7 @@ import frc.robot.subsystems.Coral_Intake;
 //import frc.robot.commands.auton.;
 //import frc.robot.commands.auton.Full.DriveForward;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ElevatorChain;
+import frc.robot.subsystems.Elevator;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -67,7 +68,7 @@ public class RobotContainer {
 	public static final DriveSubsystem m_driveTrain = new DriveSubsystem();
 	public static final Coral_Intake m_intake = new Coral_Intake();
 	public static final Algae_Intake m_algae = new Algae_Intake();
-	public static final ElevatorChain m_chain = new ElevatorChain();
+	public static final Elevator m_chain = new Elevator();
 	// public static final ColorSensor m_colorSensor = new ColorSensor();
 	final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
 	final DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 1, 0);
@@ -144,8 +145,8 @@ public class RobotContainer {
 
 	public void init() {
 		m_intake.init();
-		m_chain.init();
 		m_algae.init();
+		m_chain.homeElevator();
 		// solenoid.set(DoubleSolenoid.Value.kReverse);
 		// compressor.enableHybrid(80,120);
 		// m_colorSensor.init();
@@ -201,9 +202,9 @@ public class RobotContainer {
 		controller.b().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // red (2) -> manny extake
 		controller.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
 		controller.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
-		controller.leftTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel -1));
+		controller.leftTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel-1));
 		controller.rightTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel +1));
-
+		controller.leftBumper().whileTrue(new HomeElevator(m_chain));
 		// driver.y().onTrue(new ShooterAnalog(m_kobe, ShooterConstants.layup));
 		// driver.x().onTrue(new ShooterAnalog(m_kobe, 0));
 

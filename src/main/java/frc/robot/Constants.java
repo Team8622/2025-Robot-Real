@@ -34,12 +34,42 @@ public final class Constants {
     }
 
     public static final class ElevatorConstants{
-        // levels in meters off the ground
-        public static final double distanceFromGround = .33; //placeholder, measure distance from motor to the ground
-        public static final double L1 = .46 - distanceFromGround;
-        public static final double L2 = .81 - distanceFromGround;
-        public static final double L3 = 1.21 - distanceFromGround;
-        public static final double L4 = 1.83 - distanceFromGround;
+        //motor CAN IDS and other ports
+        public static final int elevatorLead = 13;
+        public static final int elevatorFollow = 14;
+        public static final int limitSwitchPort = 5;
+        //all units should be in inches
+        public static final double distanceFromGround = 6; //placeholder, measure distance from motor to the ground in inches
+        public static final double L1 = 18 - distanceFromGround;
+        public static final double L2 = 32 - distanceFromGround;
+        public static final double L3 = 47.5 - distanceFromGround;
+        public static final double L4 = 72 - distanceFromGround;
+        
+        public static double bottomPos = 0;
+        public static double minPos = 0;
+        public static double maxPos = L4;
+        public static double posTolerance = .5;
+
+        public static double maxVelocity = 60; // inches per second
+        public static double maxAcceleration = 60;
+        public static double max_output = .7; //percent of motor power
+
+        // PID tuning values. this is going to require a lot of testing to fine tune. This is the foundation of the elevator PID loop
+        public static double kP = 0.056; // full output until there is an error of 18 inches
+        public static double kI = 0.019; // corrects any accumulated error in kP
+        public static double kD = 0.022; //smooths out oscillations
+        public static double kS = .2; // static friction ff (feedforward)
+        public static double kG = 0.4; // gravity ff
+        public static double kV = 0.19; // velocity ff - anticipates expected velocity
+
+        // We need to find the counts per revolution of the 
+        // encoders on the elevator motors. 16 is a placeholder for now.
+        public static final int countsPerRevolution = 16;
+        public static final int gearRatio = 5; // placeholder
+        public static final double drumDiameter = 2;
+        public static final double drumCircumference = Math.PI * drumDiameter;
+        public static final double countsPerInch = (countsPerRevolution * gearRatio)/drumCircumference;
+        // ^ this used to convert the encoder information to inches
     }
     
 
