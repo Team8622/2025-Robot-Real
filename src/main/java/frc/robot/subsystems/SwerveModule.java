@@ -21,7 +21,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 
@@ -66,7 +65,6 @@ public class SwerveModule {
   SimpleMotorFeedforward turnFeedForward = new SimpleMotorFeedforward(
       DriveConstants.ksTurning, DriveConstants.kvTurning, DriveConstants.kaTurning);
 
-  private boolean done = false;
   double angleOffest = 0;
 
   // shuffleboard stuff
