@@ -33,6 +33,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.AlgaeAnalog;
 import frc.robot.commands.ChainAnalog;
 import frc.robot.commands.HomeElevator;
+import frc.robot.commands.GenericCommand;
 //import frc.robot.commands.GondolaState;
 import frc.robot.commands.IntakeAnalog;
 import frc.robot.commands.auton.Full.DriveBackward;
@@ -99,12 +100,12 @@ public class RobotContainer {
 		m_chooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData(m_chooser);
 		// registering pathplanner commands
-		NamedCommands.registerCommand("coralExtake", coralExtake());
-		NamedCommands.registerCommand("coralIntake", coralIntake());
-		NamedCommands.registerCommand("coralStop", coralStop());
-		NamedCommands.registerCommand("algaeIntake", algaeIntake());
-		NamedCommands.registerCommand("algaeExtake", algaeExtake());
-		NamedCommands.registerCommand("algaeStop", algaeStop());
+		NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
+		NamedCommands.registerCommand("coralIntake", new GenericCommand(m_intake, IntakeConstants.inSpeed));
+		NamedCommands.registerCommand("coralStop", new GenericCommand(m_intake, 0));
+		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
+		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
+		NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
 
 		// Configure the button bindings
 		configureButtonBindings();

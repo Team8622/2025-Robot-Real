@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANConstants;
 
-public class Algae_Intake extends SubsystemBase{
+public class Algae_Intake extends GenericSubsystem {
   
   public SparkMax m_lead;
   public SparkMax m_feeder;
