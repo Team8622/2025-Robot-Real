@@ -5,7 +5,7 @@
 package frc.robot;
 
 import java.util.function.BooleanSupplier;
-import java.util.function.DoubleConsumer;
+//import java.util.function.DoubleConsumer;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -13,20 +13,20 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.SensorUtil;
-import edu.wpi.first.wpilibj.XboxController;
+//import edu.wpi.first.wpilibj.SensorUtil;
+//import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+//import edu.wpi.first.wpilibj2.command.RunCommand;
+//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 //import com.revrobotics.ColorMatch;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AlgaeConstants;
-import frc.robot.Constants.ElevatorConstants;
+//import frc.robot.Constants.ElevatorConstants;
 //import frc.robot.Constants.FlipConstants;
 import frc.robot.Constants.IntakeConstants;
 //import frc.robot.Constants.ShooterConstants;
@@ -36,12 +36,12 @@ import frc.robot.commands.HomeElevator;
 import frc.robot.commands.GenericCommand;
 //import frc.robot.commands.GondolaState;
 import frc.robot.commands.IntakeAnalog;
-import frc.robot.commands.auton.Full.DriveBackward;
+//import frc.robot.commands.auton.Full.DriveBackward;
 //import frc.robot.commands.auton.Full.DoNothing;
-import frc.robot.commands.auton.Full.DriveForward;
-import frc.robot.commands.auton.Full.DriveForward2;
-import frc.robot.commands.auton.Full.DriveForwardOnly;
-import frc.robot.commands.auton.support.AutoBalanceCommand;
+//import frc.robot.commands.auton.Full.DriveForward;
+//import frc.robot.commands.auton.Full.DriveForward2;
+//import frc.robot.commands.auton.Full.DriveForwardOnly;
+//import frc.robot.commands.auton.support.AutoBalanceCommand;
 import frc.robot.subsystems.Algae_Intake;
 import frc.robot.subsystems.Coral_Intake;
 //import edu.wpi.first.wpilibj.I2C.Port;
@@ -106,57 +106,14 @@ public class RobotContainer {
 		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
 		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
 		NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
+		NamedCommands.registerCommand("elevatorBottom", new GenericCommand(m_chain, 0));
+		NamedCommands.registerCommand("elevatorL1", new GenericCommand(m_chain, 1));
+		NamedCommands.registerCommand("elevatorL2", new GenericCommand(m_chain, 2));
+		NamedCommands.registerCommand("elevatorL3", new GenericCommand(m_chain, 3));
+		NamedCommands.registerCommand("elevatorL4", new GenericCommand(m_chain, 4));
 
 		// Configure the button bindings
 		configureButtonBindings();
-	}
-
-	// Returns subsystem methods as COMMANDS for pathplanner use
-	// CORAL
-	public Command coralExtake() {
-		return m_intake.startCommand(IntakeConstants.outSpeed);
-	}
-
-	public Command coralIntake() {
-		return m_intake.startCommand(IntakeConstants.inSpeed);
-	}
-
-	public Command coralStop() {
-		return m_intake.stopCommand();
-	}
-
-	// ALGAE
-	public Command algaeIntake() {
-		return m_algae.startCommand(AlgaeConstants.vacuum);
-	}
-
-	public Command algaeExtake() {
-		return m_algae.startCommand(AlgaeConstants.spitup);
-	}
-
-	public Command algaeStop() {
-		return m_algae.stopCommand();
-	}
-
-	// ELEVATOR
-	public Command elevatorL1() {
-		return m_chain.setLevelCommand(1);
-	}
-
-	public Command elevatorL2() {
-		return m_chain.setLevelCommand(2);
-	}
-
-	public Command elevatorL3() {
-		return m_chain.setLevelCommand(3);
-	}
-
-	public Command elevatorL4() {
-		return m_chain.setLevelCommand(4);
-	}
-
-	public Command elevatorBottom() {
-		return m_chain.setLevelCommand(0);
 	}
 
 	// SmartDashboard command selecter
@@ -185,8 +142,8 @@ public class RobotContainer {
 		 */
 
 		// Just mobility
-		final Command kMobility = new SequentialCommandGroup(
-				new DriveForwardOnly(m_driveTrain));
+		//final Command kMobility = new SequentialCommandGroup(
+		//		new DriveForwardOnly(m_driveTrain));
 
 		// Just Score on speaker
 		/*
@@ -195,9 +152,9 @@ public class RobotContainer {
 		 * new ShooterAnalog(m_kobe, ShooterConstants.longRange3).withTimeout(1));
 		 */
 
-		final Command speakerDub = new SequentialCommandGroup(
+		//final Command speakerDub = new SequentialCommandGroup(
 		// new ShootBrother(m_intake, m_kobe)
-		);
+		//);
 
 		/*
 		 * final Command twoNoteAuto = new SequentialCommandGroup(
