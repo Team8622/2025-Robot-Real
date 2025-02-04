@@ -137,7 +137,7 @@ public class DriveSubsystem extends GenericSubsystem {
 		RobotConfig config;
 		try {
 			config = RobotConfig.fromGUISettings();
-
+			// TODO: fix the method that sets chassispeeds. runvelocity is incorrect but i need to better understand the swerve code to fix it.
 			// Configure AutoBuilder last
 			AutoBuilder.configure(
 					this::getPose, // Robot pose supplier
