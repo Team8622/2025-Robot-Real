@@ -23,10 +23,12 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,11 +40,12 @@ import frc.robot.Constants;
 //import edu.wpi.first.wpilibj2.command.RunCommand;
 //import frc.robot.commands.Drive;
 import frc.robot.commands.Drive;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 //import frc.robot.commands.auton.*;
-
-
-
-
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -57,12 +60,13 @@ public class Robot extends TimedRobot {
    */
   private RobotContainer m_robotContainer;
   Thread m_visionThread;
-  
 
-  
 
-  
-  
+  // distance per pulse = (distance per revolution) / (pulses per revolution)
+  // = (Pi * D) / ppr
+
+  // Standard classes for controlling our elevator
+
   @Override
   public void robotInit() {
     //AddressableLED m_led = new AddressableLED(9);
@@ -111,7 +115,6 @@ public class Robot extends TimedRobot {
  
     //m_chooser.addOption("Deposit GP and move", kDepositMobility);
   }
-
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
@@ -181,8 +184,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
   }         
-
-
 
   @Override
   public void testInit() {

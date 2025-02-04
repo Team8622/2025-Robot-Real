@@ -1,27 +1,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ElevatorChain;
+import frc.robot.subsystems.Elevator;
 
 public class ChainAnalog extends Command{
-    ElevatorChain m_chain;
-    double setSpeed;
-    
-    public ChainAnalog(ElevatorChain chain, double speed){
+    Elevator m_chain;
+    int setLevel;
+
+    public ChainAnalog(Elevator chain, int level){
         m_chain = chain;
-        setSpeed = speed;
+        setLevel = level;
         addRequirements(m_chain);
     }   
     
     @Override
     public void initialize(){
-        m_chain.start(setSpeed);
-
-    }
-
-    @Override
-    public void end(boolean interrupted){
-        m_chain.stop();
+        m_chain.setLevel(setLevel);
     }
 }
 
