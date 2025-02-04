@@ -83,57 +83,14 @@ public class RobotContainer {
 		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
 		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
 		NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
+		NamedCommands.registerCommand("elevatorBottom", new GenericCommand(m_chain, 0));
+		NamedCommands.registerCommand("elevatorL1", new GenericCommand(m_chain, 1));
+		NamedCommands.registerCommand("elevatorL2", new GenericCommand(m_chain, 2));
+		NamedCommands.registerCommand("elevatorL3", new GenericCommand(m_chain, 3));
+		NamedCommands.registerCommand("elevatorL4", new GenericCommand(m_chain, 4));
 
 		// Configure the button bindings
 		configureButtonBindings();
-	}
-
-	// Returns subsystem methods as COMMANDS for pathplanner use
-	// CORAL
-	public Command coralExtake() {
-		return m_intake.startCommand(IntakeConstants.outSpeed);
-	}
-
-	public Command coralIntake() {
-		return m_intake.startCommand(IntakeConstants.inSpeed);
-	}
-
-	public Command coralStop() {
-		return m_intake.stopCommand();
-	}
-
-	// ALGAE
-	public Command algaeIntake() {
-		return m_algae.startCommand(AlgaeConstants.vacuum);
-	}
-
-	public Command algaeExtake() {
-		return m_algae.startCommand(AlgaeConstants.spitup);
-	}
-
-	public Command algaeStop() {
-		return m_algae.stopCommand();
-	}
-
-	// ELEVATOR
-	public Command elevatorL1() {
-		return m_chain.setLevelCommand(1);
-	}
-
-	public Command elevatorL2() {
-		return m_chain.setLevelCommand(2);
-	}
-
-	public Command elevatorL3() {
-		return m_chain.setLevelCommand(3);
-	}
-
-	public Command elevatorL4() {
-		return m_chain.setLevelCommand(4);
-	}
-
-	public Command elevatorBottom() {
-		return m_chain.setLevelCommand(0);
 	}
 
 	// SmartDashboard command selecter
