@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.studica.frc.AHRS;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -33,6 +32,8 @@ public class DriveSubsystem extends GenericSubsystem {
 	Translation2d m_frontRightLocation = new Translation2d(0.280, -0.275);
 	Translation2d m_backLeftLocation = new Translation2d(-0.284, 0.280);
 	Translation2d m_backRightLocation = new Translation2d(-0.285, -0.280);
+	private ChassisSpeeds speeds = new ChassisSpeeds();
+	private boolean drivingRobotRelative = false;
 	// Creating my kinematics object using the module locations
 	SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
 			m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation);
@@ -144,7 +145,7 @@ public class DriveSubsystem extends GenericSubsystem {
 					this::resetPose, // Method to reset odometry (will be called if your auto has a
 										// starting pose)
 					this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-					(speeds, feedforwards) -> runVelocity(speeds), // Method that will drive the
+					(speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the
 																	// robot given ROBOT RELATIVE
 																	// ChassisSpeeds. Also optionally
 																	// outputs individual module
@@ -309,6 +310,51 @@ public class DriveSubsystem extends GenericSubsystem {
 		// swerveModuleStates[3].toString());
 
 	}
+    /**
+     * Drive the robot with the provided speeds <b>(ROBOT RELATIVE)></b>
+     * @param xSpeed
+     * @param ySpeed
+     * @param rotSpeed
+     */
+    public void drive(ChassisSpeeds speeds) {
+        this.speeds = speeds;
+        SwerveModuleState[] m_moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(speeds);
+        this.setModuleStates(m_moduleStates);
+    }
+
+	public void driveFieldRelative(double xSpeed, double ySpeed, double rotSpeed, boolean fieldRelative) {
+        this.drivingRobotRelative = false;
+        this.drive(ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rotSpeed, Rotation2d.fromDegrees(-getHeading())));
+    }
+
+    /**
+     * Drive the robot with the provided speeds <b>(FIELD RELATIVE)</b>
+     * @param speeds
+     */
+    public void driveFieldRelative(ChassisSpeeds speeds) {
+        this.drivingRobotRelative = false;
+        this.drive(speeds);
+    }
+
+    /**
+     * Drive the robot with the provided speeds <b>(ROBOT RELATIVE)</b>
+     * @param xSpeed
+     * @param ySpeed
+     * @param rotSpeed
+     */
+    public void driveRobotRelative(double xSpeed, double ySpeed, double rotSpeed) {
+        this.drivingRobotRelative = true;
+        this.drive(new ChassisSpeeds(xSpeed, ySpeed, rotSpeed));
+    }
+
+    /**
+     * Drive the robot with the provided speeds <b>(ROBOT RELATIVE)</b>
+     * @param speeds
+     */
+    public void driveRobotRelative(ChassisSpeeds speeds) {
+        this.drivingRobotRelative = true;
+        this.drive(speeds);
+    }
 
 	/**
 	 * Sets the swerve ModuleStates.
@@ -346,7 +392,6 @@ public class DriveSubsystem extends GenericSubsystem {
 		}
 		return currentHeading;
 	}
-
 	// /**
 	// * Returns the turn rate of the robot.
 	// *
