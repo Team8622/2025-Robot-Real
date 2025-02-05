@@ -61,8 +61,8 @@ public final class Constants {
 
         // We need to find the counts per revolution of the 
         // encoders on the elevator motors. 16 is a placeholder for now.
-        public static final int countsPerRevolution = 16;
-        public static final int gearRatio = 5; // placeholder
+        public static final int countsPerRevolution = 4096;
+        public static final int gearRatio = 40; // placeholder
         public static final double drumDiameter = 2;
         public static final double drumCircumference = Math.PI * drumDiameter;
         public static final double countsPerInch = (countsPerRevolution * gearRatio)/drumCircumference;

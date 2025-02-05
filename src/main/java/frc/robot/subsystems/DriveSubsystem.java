@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ModuleConstants;
 
 public class DriveSubsystem extends GenericSubsystem {
 	// The gyro sensor
@@ -153,8 +154,8 @@ public class DriveSubsystem extends GenericSubsystem {
 					new PPHolonomicDriveController( // PPHolonomicController is the built in path
 													// following controller for holonomic drive
 													// trains
-							new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-							new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+							new PIDConstants((ModuleConstants.kPModuleDriveController), 0.0, 0.0), // Translation PID constants
+							new PIDConstants(ModuleConstants.kPModuleTurnController, 0.0, 0.0) // Rotation PID constants
 					),
 					config, // The robot configuration
 					() -> {
