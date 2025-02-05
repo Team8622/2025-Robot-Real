@@ -29,7 +29,6 @@ import frc.robot.subsystems.Algae_Intake;
 import frc.robot.subsystems.Coral_Intake;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.SwerveSimulator; // Add this import statement
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -45,7 +44,6 @@ public class RobotContainer {
 	// Buttons for the Driver Controller
 
 	public static final DriveSubsystem m_driveTrain = new DriveSubsystem();
-	public static final SwerveSimulator m_sim = new SwerveSimulator(m_driveTrain);
 	public static final Coral_Intake m_intake = new Coral_Intake();
 	public static final Algae_Intake m_algae = new Algae_Intake();
 	public static final Elevator m_chain = new Elevator();
