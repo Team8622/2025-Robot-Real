@@ -290,6 +290,9 @@ public class DriveSubsystem extends GenericSubsystem {
 	@SuppressWarnings("ParameterName")
 	public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
 		SmartDashboard.putBoolean("Field Relative:", fieldRelative);
+		SmartDashboard.putNumber("drive: xSpeed", xSpeed);
+		SmartDashboard.putNumber("drive: ySpeed", ySpeed);
+		SmartDashboard.putNumber("drive: rot", rot);
 		SwerveModuleState[] swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
 				fieldRelative
 						? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,

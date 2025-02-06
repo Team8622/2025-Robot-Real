@@ -21,6 +21,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 
@@ -148,6 +149,7 @@ public class SwerveModule {
     double m_speedMetersPerSecond =
         ModuleConstants.kDrivetoMetersPerSecond * m_driveMotor.getEncoder().getVelocity();
 
+    SmartDashboard.putNumber("Motor " + m_driveMotor.getDeviceId(), m_driveMotor.getEncoder().getVelocity());
         
     // Optimize the reference state to avoid spinning further than 90 degrees
     state.optimize(new Rotation2d(getEncoderRadians()));
