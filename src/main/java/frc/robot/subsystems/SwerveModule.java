@@ -142,16 +142,15 @@ public class SwerveModule {
 
   /**
    * Sets the desired state for the module and sends calculated output from controller to the motor.
-   * @param desiredState Desired state with speed and angle.
+   * @param state Desired state with speed and angle.
    */
-  public void setDesiredState(SwerveModuleState desiredState) {
+  public void setDesiredState(SwerveModuleState state) {
     double m_speedMetersPerSecond =
         ModuleConstants.kDrivetoMetersPerSecond * m_driveMotor.getEncoder().getVelocity();
 
-
+        
     // Optimize the reference state to avoid spinning further than 90 degrees
-    SwerveModuleState state =
-        SwerveModuleState.optimize(desiredState, new Rotation2d(getEncoderRadians()));
+    state.optimize(new Rotation2d(getEncoderRadians()));
     
 //    stop the code to stop it from moving if the speed is very, very small
     if (Math.abs(state.speedMetersPerSecond) <= 1){
