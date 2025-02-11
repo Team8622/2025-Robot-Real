@@ -187,7 +187,7 @@ public class SwerveModule {
   @Deprecated
   /** Zeros all the SwerveModule encoders. */
   public void resetEncoders() {
-      //m_turnEncoder.reset();
+      m_turningMotor.getEncoder().setPosition(0);
       m_driveMotor.getEncoder().setPosition(0);
   }
       
