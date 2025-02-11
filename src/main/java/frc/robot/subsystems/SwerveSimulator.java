@@ -6,9 +6,9 @@ import edu.wpi.first.networktables.StructArrayPublisher;
 
 public class SwerveSimulator extends GenericSubsystem {
   private final StructArrayPublisher<SwerveModuleState> publisher;
-  private final DriveSubsystem driveSubsystem;
+  private final SwerveSubsystem driveSubsystem;
 
-  public SwerveSimulator(DriveSubsystem driveSubsystem) {
+  public SwerveSimulator(SwerveSubsystem driveSubsystem) {
     this.driveSubsystem = driveSubsystem;
     // Start publishing an array of module states with the "/SwerveStates" key
     publisher = NetworkTableInstance.getDefault()
@@ -18,6 +18,7 @@ public class SwerveSimulator extends GenericSubsystem {
   @Override
   public void periodic() {
     // Periodically send a set of module states
-    publisher.set(driveSubsystem.getModuleStates());
+    // TODO finish this code
+    //publisher.set(driveSubsystem.getModuleStates());
   }
 }
