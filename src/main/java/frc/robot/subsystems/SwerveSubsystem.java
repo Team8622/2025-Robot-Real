@@ -12,6 +12,7 @@ import frc.robot.Constants.ModuleConstants;
 import java.io.File;
 import java.util.function.Supplier;
 
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.commands.PathfindingCommand;
@@ -20,11 +21,15 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Filesystem;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
+import swervelib.telemetry.SwerveDriveTelemetry;
+import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
+import swervelib.SwerveModule;
 import swervelib.math.SwerveMath;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -40,7 +45,9 @@ public class SwerveSubsystem extends SubsystemBase {
     File directory = new File(Filesystem.getDeployDirectory(), "swerve");
     SwerveDrive swerveDrive;
 
+
     public SwerveSubsystem(File directory) {
+        SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
         try {
             swerveDrive = new SwerveParser(directory).createSwerveDrive(maxSpeed,
                     new Pose2d(new Translation2d(Meter.of(1),
@@ -53,11 +60,21 @@ public class SwerveSubsystem extends SubsystemBase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
+
+        for(SwerveModule m : swerveDrive.getModules())
+        {
+        System.out.println("Module Name: "+m.configuration.name);
+        DutyCycleEncoder absoluteEncoder = (DutyCycleEncoder)m.configuration.absoluteEncoder.getAbsoluteEncoder();
+        System.out.println(absoluteEncoder.get());
+        }
         setupPathPlanner();
     }
 
     @Override
     public void periodic() {
+ 
         // This method will be called once per scheduler run
     }
 
