@@ -36,17 +36,20 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.util.Units;
 
 import static edu.wpi.first.units.Units.Meter;
 
 public class SwerveSubsystem extends SubsystemBase {
     /** Creates a new SwerveSubsystem. */
     double maxSpeed = DriveConstants.kMaxSpeedMetersPerSecond;
-    File directory = new File(Filesystem.getDeployDirectory(), "swerve");
+    File directory = new File(Filesystem.getDeployDirectory(), "swerve/neo");
     SwerveDrive swerveDrive;
 
 
     public SwerveSubsystem(File directory) {
+        double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(12.8, 1);
+        double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4), 6.75, 1);
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
         try {
             swerveDrive = new SwerveParser(directory).createSwerveDrive(maxSpeed,
@@ -67,7 +70,6 @@ public class SwerveSubsystem extends SubsystemBase {
         {
         System.out.println("Module Name: "+m.configuration.name);
         DutyCycleEncoder absoluteEncoder = (DutyCycleEncoder)m.configuration.absoluteEncoder.getAbsoluteEncoder();
-        System.out.println(absoluteEncoder.get());
         }
         setupPathPlanner();
     }
