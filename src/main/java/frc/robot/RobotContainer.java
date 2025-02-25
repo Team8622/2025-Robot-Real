@@ -128,6 +128,7 @@ public class RobotContainer {
 	public void init() {
 		m_intake.init();
 		m_algae.init();
+		m_chain.init();
 		m_chain.homeElevator();
 		// solenoid.set(DoubleSolenoid.Value.kReverse);
 		// compressor.enableHybrid(80,120);

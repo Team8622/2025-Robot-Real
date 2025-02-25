@@ -24,8 +24,8 @@ import swervelib.math.Matter;
 public final class Constants {
 
     public static final class CANConstants {
-		public static final int intakeMain = 9;
-        public static final int intakeSushi = 10;
+		public static final int intakeMain = 13;
+        public static final int intakeSushi = 14;
         public static final int algaeLead = 11;
         public static final int algaeFollow = 12;
         public static final int armsMain = 15;
@@ -34,8 +34,8 @@ public final class Constants {
 
     public static final class ElevatorConstants{
         //motor CAN IDS and other ports
-        public static final int elevatorLead = 13;
-        public static final int elevatorFollow = 14;
+        public static final int elevatorLead = 9;
+        public static final int elevatorFollow = 10;
         public static final int limitSwitchPort = 5;
         //all units should be in inches
         public static final double distanceFromGround = 6; //placeholder, measure distance from motor to the ground in inches
@@ -87,7 +87,7 @@ public final class Constants {
 
     
     public static final class DriveConstants {
-
+        //not important rn
         public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
          public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
          public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag

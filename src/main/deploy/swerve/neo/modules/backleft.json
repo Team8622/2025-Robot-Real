@@ -15,13 +15,13 @@
     "canbus": null
   },
   "encoder": {
-    "type": "ctre_mag",
+    "type": "dutycycle",
     "id": 2,
     "canbus": null
   },
   "inverted": {
     "drive": false,
-    "angle": false
+    "angle": true
   },
   "absoluteEncoderInverted": false
 }

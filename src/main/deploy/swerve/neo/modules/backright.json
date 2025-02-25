@@ -15,7 +15,7 @@
     "canbus": null
   },
   "encoder": {
-    "type": "ctre_mag",
+    "type": "dutycycle",
     "id": 0,
     "canbus": null
   },

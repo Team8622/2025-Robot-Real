@@ -23,6 +23,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
@@ -48,8 +49,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
 
     public SwerveSubsystem(File directory) {
-        double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(12.8, 1);
-        double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4), 6.75, 1);
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
         try {
             swerveDrive = new SwerveParser(directory).createSwerveDrive(maxSpeed,
@@ -63,7 +62,7 @@ public class SwerveSubsystem extends SubsystemBase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
+        swerveDrive.pushOffsetsToEncoders();
         swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
 
         for(SwerveModule m : swerveDrive.getModules())

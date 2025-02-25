@@ -16,15 +16,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ElevatorConstants;
 
 public class Elevator extends GenericSubsystem {
-    private final SparkMax primaryMotor;
-    private final SparkMax followerMotor;
-    private final RelativeEncoder encoder;
-    private final DigitalInput bottomLimit;
-    private final PIDController pidController;
-    private final TrapezoidProfile.Constraints constraints;
+    private SparkMax primaryMotor;
+    private SparkMax followerMotor;
+    private RelativeEncoder encoder;
+    private DigitalInput bottomLimit;
+    private PIDController pidController;
+    private TrapezoidProfile.Constraints constraints;
     private TrapezoidProfile.State goalState;
     private TrapezoidProfile.State currentState;
-    private final TrapezoidProfile profile;
+    private TrapezoidProfile profile;
 
     private ElevatorPosition currentTarget = ElevatorPosition.DOWN;
     private boolean isHomed = false;
@@ -52,6 +52,9 @@ public class Elevator extends GenericSubsystem {
     }
 
     public Elevator() {
+    }
+
+    public void init(){
         primaryMotor = new SparkMax(ElevatorConstants.elevatorLead, MotorType.kBrushless);
         followerMotor = new SparkMax(ElevatorConstants.elevatorFollow, MotorType.kBrushless);
 
@@ -86,13 +89,12 @@ public class Elevator extends GenericSubsystem {
 
         configureMotors();
     }
-
     private void configureMotors() {
         // Primary motor configuration
         primaryMotor.configure(resetConfig, ResetMode.kResetSafeParameters, null);
 
         // Follower motor configuration
-        primaryMotor.configure(resetConfig, ResetMode.kResetSafeParameters, null);
+        followerMotor.configure(resetConfig, ResetMode.kResetSafeParameters, null);
     }
 
     @Override
