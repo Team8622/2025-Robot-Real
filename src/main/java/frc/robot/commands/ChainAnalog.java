@@ -5,17 +5,17 @@ import frc.robot.subsystems.Elevator;
 
 public class ChainAnalog extends Command{
     Elevator m_chain;
-    int setLevel;
+    int levelDelta;
 
-    public ChainAnalog(Elevator chain, int level){
+    public ChainAnalog(Elevator chain, int delta){
         m_chain = chain;
-        setLevel = level;
+        levelDelta = delta;
         addRequirements(m_chain);
     }   
     
     @Override
     public void initialize(){
-        m_chain.setLevel(setLevel);
+        m_chain.adjustLevel(levelDelta);
     }
 }
 
