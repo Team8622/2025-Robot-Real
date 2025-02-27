@@ -56,12 +56,12 @@ public class Elevator extends GenericSubsystem {
 
     public void init(){
         
-        isHomed = true;
+        isHomed = true; //Temporary
         primaryMotor = new SparkMax(ElevatorConstants.elevatorLead, MotorType.kBrushless);
         followerMotor = new SparkMax(ElevatorConstants.elevatorFollow, MotorType.kBrushless);
 
         SparkMaxConfig followerConfig = new SparkMaxConfig();
-        followerConfig.follow(primaryMotor, false);
+        followerConfig.follow(9, false);
 
         // Configure follower
         followerMotor.configure(followerConfig, null, null);
@@ -101,7 +101,7 @@ public class Elevator extends GenericSubsystem {
 
     @Override
     public void periodic() {
-        primaryMotor.set(1);
+        primaryMotor.set(1); //TODO: Temporary
         currentPos = encoder.getPosition() / ElevatorConstants.countsPerInch;
 
         // Calculate the next state and update current state
