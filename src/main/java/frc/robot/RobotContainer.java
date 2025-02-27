@@ -145,10 +145,5 @@ public class RobotContainer {
 		controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel - 1));
 		controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel + 1));
 		controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
-
-		// driver buttons
-		// sad losers, only having three buttons. I have so many. I am so powerful.
-		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // right trigger is in
-		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // left trigger is ou
 	}
 }

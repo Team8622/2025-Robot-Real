@@ -114,7 +114,7 @@ public class Elevator extends GenericSubsystem {
         }
 
         // Only run control if homed
-        if (isHomed) {
+        if (isHomed || true) {
             double pidOutput = pidController.calculate(getHeightInches(), currentState.position);
             double ff = calculateFeedForward(currentState);
 
