@@ -55,6 +55,8 @@ public class Elevator extends GenericSubsystem {
     }
 
     public void init(){
+        
+        isHomed = true;
         primaryMotor = new SparkMax(ElevatorConstants.elevatorLead, MotorType.kBrushless);
         followerMotor = new SparkMax(ElevatorConstants.elevatorFollow, MotorType.kBrushless);
 
@@ -99,7 +101,7 @@ public class Elevator extends GenericSubsystem {
 
     @Override
     public void periodic() {
-
+        primaryMotor.set(1);
         currentPos = encoder.getPosition() / ElevatorConstants.countsPerInch;
 
         // Calculate the next state and update current state
@@ -114,7 +116,7 @@ public class Elevator extends GenericSubsystem {
         }
 
         // Only run control if homed
-        if (isHomed || true) {
+        if (isHomed) {
             double pidOutput = pidController.calculate(getHeightInches(), currentState.position);
             double ff = calculateFeedForward(currentState);
 
@@ -159,6 +161,7 @@ public class Elevator extends GenericSubsystem {
     }
 
     public void setPositionInches(double inches) {
+        //REMEMBER TO PUT BACK TO !ISHOMED
         if (!isHomed && inches > 0) {
             System.out.println("Warning: Elevator not homed! Home first before moving to positions.");
             return;

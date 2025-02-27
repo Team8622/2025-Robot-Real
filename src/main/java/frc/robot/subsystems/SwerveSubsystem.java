@@ -19,6 +19,7 @@ import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.studica.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -46,8 +47,7 @@ public class SwerveSubsystem extends SubsystemBase {
     double maxSpeed = DriveConstants.kMaxSpeedMetersPerSecond;
     File directory = new File(Filesystem.getDeployDirectory(), "swerve/neo");
     SwerveDrive swerveDrive;
-
-
+    //DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0);
     public SwerveSubsystem(File directory) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
         try {
@@ -63,7 +63,7 @@ public class SwerveSubsystem extends SubsystemBase {
             throw new RuntimeException(e);
         }
         swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
-
+        AHRS navx = (AHRS)swerveDrive.getGyro().getIMU();
         for(SwerveModule m : swerveDrive.getModules())
         {
         System.out.println("Module Name: "+m.configuration.name);
@@ -74,9 +74,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
- 
+        //SmartDashboard.putNumber("NEW Absolute Encoder Offset", getAbsolutePosition());
         // This method will be called once per scheduler run
     }
+
+    // public double getAbsolutePosition() {
+    //     return absoluteEncoder.get() * 360.0; // Convert to degrees
+    // }
 
     public void setupPathPlanner() {
         // Load the RobotConfig from the GUI settings. You should probably
