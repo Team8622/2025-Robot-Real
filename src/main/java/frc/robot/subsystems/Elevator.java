@@ -233,6 +233,10 @@ public class Elevator extends GenericSubsystem {
         this.setLevel(level);
     }
 
+    public void adjustLevel(int delta) {
+        setLevel(MathUtil.clamp(elevatorLevel + delta, 0, 4));
+    }
+
     public void setLevel(int level) {
         // Array of elevator positions in inches corresponding to each level
         ElevatorPosition[] levels = {
@@ -251,6 +255,7 @@ public class Elevator extends GenericSubsystem {
             // Default to bottom position if the level is not valid
             setPositionInches(levels[0].getPositionInches()); // Use index 0 (bottom)
             elevatorLevel = 0;
+            currentTarget = levels[0];
         }
     }
 
