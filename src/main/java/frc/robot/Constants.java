@@ -51,7 +51,7 @@ public final class Constants {
 
         public static double maxVelocity = 60; // inches per second
         public static double maxAcceleration = 60;
-        public static double max_output = .7; //percent of motor power
+        public static double max_output = 1; //percent of motor power
 
         // PID tuning values. this is going to require a lot of testing to fine tune. This is the foundation of the elevator PID loop
         public static double kP = 0.056; // full output until there is an error of 18 inches
@@ -94,12 +94,12 @@ public final class Constants {
          public static final double MAX_SPEED  = Units.feetToMeters(14.5);
 
         public static final int kFrontLeftDriveMotorPort = 4;
-        public static final int kRearLeftDriveMotorPort = 2;
+        public static final int kRearLeftDriveMotorPort = 1;
         public static final int kFrontRightDriveMotorPort = 6;
         public static final int kRearRightDriveMotorPort = 8;
     
         public static final int kFrontLeftTurningMotorPort = 3;
-        public static final int kRearLeftTurningMotorPort = 1;
+        public static final int kRearLeftTurningMotorPort = 2;
         public static final int kFrontRightTurningMotorPort = 5;
         public static final int kRearRightTurningMotorPort = 7;
 

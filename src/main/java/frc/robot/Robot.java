@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   private RobotContainer m_robotContainer;
-  Thread m_visionThread;
+  //Thread m_visionThread;
 
 
   // distance per pulse = (distance per revolution) / (pulses per revolution)
@@ -63,27 +63,27 @@ public class Robot extends TimedRobot {
     
 
     //camera code
-    m_visionThread =
-    new Thread(
-        () -> {
-          UsbCamera camera = CameraServer.startAutomaticCapture();
-          camera.setResolution(640, 480);
-          CvSink cvSink = CameraServer.getVideo();
-          CvSource outputStream = CameraServer.putVideo("Rectangle", 640, 480);
-          Mat mat = new Mat();
-          while (!Thread.interrupted()) {
-            if (cvSink.grabFrame(mat) == 0) {
-              outputStream.notifyError(cvSink.getError());
-              continue;
-            }
-            Imgproc.rectangle(
-                mat, new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
+  //   m_visionThread =
+  //   new Thread(
+  //       () -> {
+  //         UsbCamera camera = CameraServer.startAutomaticCapture();
+  //         camera.setResolution(640, 480);
+  //         CvSink cvSink = CameraServer.getVideo();
+  //         CvSource outputStream = CameraServer.putVideo("Rectangle", 640, 480);
+  //         Mat mat = new Mat();
+  //         while (!Thread.interrupted()) {
+  //           if (cvSink.grabFrame(mat) == 0) {
+  //             outputStream.notifyError(cvSink.getError());
+  //             continue;
+  //           }
+  //           Imgproc.rectangle(
+  //               mat, new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
 
-            outputStream.putFrame(mat);
-          }
-        });
-  m_visionThread.setDaemon(true);
-  m_visionThread.start();
+  //           outputStream.putFrame(mat);
+  //         }
+  //       });
+  // m_visionThread.setDaemon(true);
+  // m_visionThread.start();
   //end camera code
     
  

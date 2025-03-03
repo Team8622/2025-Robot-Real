@@ -60,16 +60,17 @@ public class Elevator extends GenericSubsystem {
         primaryMotor = new SparkMax(ElevatorConstants.elevatorLead, MotorType.kBrushless);
         followerMotor = new SparkMax(ElevatorConstants.elevatorFollow, MotorType.kBrushless);
 
-        SparkMaxConfig followerConfig = new SparkMaxConfig();
-        followerConfig.follow(9, false);
+        //SparkMaxConfig followerConfig = new SparkMaxConfig();
+        //followerConfig.follow(9, false);
 
         // Configure follower
-        followerMotor.configure(followerConfig, null, null);
+        //followerMotor.configure(followerConfig, null, null);
 
         encoder = primaryMotor.getEncoder();
         bottomLimit = new DigitalInput(ElevatorConstants.limitSwitchPort);
 
         resetConfig.idleMode(IdleMode.kBrake);
+        resetConfig.inverted(true);
         resetConfig.smartCurrentLimit(40);
         resetConfig.voltageCompensation(12.0);
 
@@ -101,7 +102,7 @@ public class Elevator extends GenericSubsystem {
 
     @Override
     public void periodic() {
-        primaryMotor.set(1); //TODO: Temporary, just testing the motor
+        //primaryMotor.set(1); //TODO: temporary
         currentPos = encoder.getPosition() / ElevatorConstants.countsPerInch;
 
         // Calculate the next state and update current state
@@ -125,7 +126,7 @@ public class Elevator extends GenericSubsystem {
                     -ElevatorConstants.max_output,
                     ElevatorConstants.max_output);
 
-            primaryMotor.set(outputPower);
+            //primaryMotor.set(outputPower); TODO: re enable
         }
 
         // Update SmartDashboard
@@ -133,7 +134,7 @@ public class Elevator extends GenericSubsystem {
     }
 
     private void handleBottomLimit() {
-        stopMotors();
+        //stopMotors();
         encoder.setPosition(ElevatorConstants.bottomPos * ElevatorConstants.countsPerInch);
         isHomed = true;
         setpoint = ElevatorConstants.bottomPos;
