@@ -59,7 +59,7 @@ public class Elevator extends GenericSubsystem {
         isHomed = true; //TODO: Temporary
         primaryMotor = new SparkMax(ElevatorConstants.elevatorLead, MotorType.kBrushless);
         followerMotor = new SparkMax(ElevatorConstants.elevatorFollow, MotorType.kBrushless);
-
+        // done using rev hardware client
         //SparkMaxConfig followerConfig = new SparkMaxConfig();
         //followerConfig.follow(9, false);
 
@@ -70,7 +70,6 @@ public class Elevator extends GenericSubsystem {
         bottomLimit = new DigitalInput(ElevatorConstants.limitSwitchPort);
 
         resetConfig.idleMode(IdleMode.kBrake);
-        resetConfig.inverted(true);
         resetConfig.smartCurrentLimit(40);
         resetConfig.voltageCompensation(12.0);
 
@@ -162,7 +161,6 @@ public class Elevator extends GenericSubsystem {
     }
 
     public void setPositionInches(double inches) {
-        //REMEMBER TO PUT BACK TO !ISHOMED
         if (!isHomed && inches > 0) {
             System.out.println("Warning: Elevator not homed! Home first before moving to positions.");
             return;
