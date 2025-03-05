@@ -66,7 +66,7 @@ public class SwerveSubsystem extends SubsystemBase {
         AHRS navx = (AHRS)swerveDrive.getGyro().getIMU();
         for(SwerveModule m : swerveDrive.getModules())
         {
-        System.out.println("Module Name: "+m.configuration.name);
+        //System.out.println("Module Name: "+m.configuration.name);
         DutyCycleEncoder absoluteEncoder = (DutyCycleEncoder)m.configuration.absoluteEncoder.getAbsoluteEncoder();
         }
         setupPathPlanner();

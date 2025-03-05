@@ -168,7 +168,7 @@ public class Elevator extends GenericSubsystem {
 
     public void setPositionInches(double inches) {
         if (!isHomed && inches > 0) {
-            System.out.println("Warning: Elevator not homed! Home first before moving to positions.");
+            //System.out.println("Warning: Elevator not homed! Home first before moving to positions.");
             return;
         }
 
