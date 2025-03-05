@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
@@ -29,7 +30,8 @@ public class Elevator extends GenericSubsystem {
     private ElevatorPosition currentTarget = ElevatorPosition.DOWN;
     private boolean isHomed = false;
     private double setpoint = 0.0;
-    SparkMaxConfig resetConfig = new SparkMaxConfig();
+    SparkMaxConfig leadConfig = new SparkMaxConfig();
+    SparkMaxConfig followerConfig = new SparkMaxConfig();
     double currentPos;
     public int elevatorLevel = 0;
 
@@ -56,22 +58,23 @@ public class Elevator extends GenericSubsystem {
 
     public void init(){
         
-        isHomed = true; //TODO: Temporary
+        isHomed = true; //TODO: Temporary until limit switch works lol
         primaryMotor = new SparkMax(ElevatorConstants.elevatorLead, MotorType.kBrushless);
         followerMotor = new SparkMax(ElevatorConstants.elevatorFollow, MotorType.kBrushless);
         // done using rev hardware client
-        //SparkMaxConfig followerConfig = new SparkMaxConfig();
-        //followerConfig.follow(9, false);
-
+        
+        followerConfig.follow(9, true);
+        followerConfig.idleMode(IdleMode.kBrake);
+        followerConfig.smartCurrentLimit(50);
+        followerConfig.voltageCompensation(12.0);
         // Configure follower
         //followerMotor.configure(followerConfig, null, null);
+        leadConfig.idleMode(IdleMode.kBrake);
+        leadConfig.smartCurrentLimit(50);
+        leadConfig.voltageCompensation(12.0);
 
         encoder = primaryMotor.getEncoder();
         bottomLimit = new DigitalInput(ElevatorConstants.limitSwitchPort);
-
-        resetConfig.idleMode(IdleMode.kBrake);
-        resetConfig.smartCurrentLimit(40);
-        resetConfig.voltageCompensation(12.0);
 
         constraints = new TrapezoidProfile.Constraints(
                 ElevatorConstants.maxVelocity,
@@ -93,15 +96,15 @@ public class Elevator extends GenericSubsystem {
     }
     private void configureMotors() {
         // Primary motor configuration
-        primaryMotor.configure(resetConfig, ResetMode.kResetSafeParameters, null);
+        primaryMotor.configure(leadConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         // Follower motor configuration
-        followerMotor.configure(resetConfig, ResetMode.kResetSafeParameters, null);
+        followerMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     @Override
     public void periodic() {
-        //primaryMotor.set(1); //TODO: temporary
+        primaryMotor.set(-1); //TODO: temporary
         currentPos = encoder.getPosition() / ElevatorConstants.countsPerInch;
 
         // Calculate the next state and update current state
@@ -125,7 +128,10 @@ public class Elevator extends GenericSubsystem {
                     -ElevatorConstants.max_output,
                     ElevatorConstants.max_output);
 
-            //primaryMotor.set(outputPower); TODO: re enable
+            SmartDashboard.putNumber("PID Output", pidOutput);
+            SmartDashboard.putNumber("Feedforward", ff);
+            SmartDashboard.putNumber("Output Power", outputPower);
+            //primaryMotor.set(outputPower);
         }
 
         // Update SmartDashboard
@@ -182,6 +188,7 @@ public class Elevator extends GenericSubsystem {
         SmartDashboard.putString("Elevator State", currentTarget.toString());
         SmartDashboard.putNumber("Elevator Current", primaryMotor.getOutputCurrent());
         SmartDashboard.putNumber("Elevator Velocity", currentState.velocity);
+        SmartDashboard.putNumber("Encoder Position", encoder.getPosition());
     }
 
     public double getHeightInches() {
