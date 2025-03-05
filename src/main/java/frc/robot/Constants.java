@@ -10,6 +10,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
+import swervelib.math.Matter;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -22,8 +24,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 public final class Constants {
 
     public static final class CANConstants {
-		public static final int intakeMain = 9;
-        public static final int intakeSushi = 10;
+		public static final int intakeMain = 13;
+        public static final int intakeSushi = 14;
         public static final int algaeLead = 11;
         public static final int algaeFollow = 12;
         public static final int armsMain = 15;
@@ -32,8 +34,8 @@ public final class Constants {
 
     public static final class ElevatorConstants{
         //motor CAN IDS and other ports
-        public static final int elevatorLead = 13;
-        public static final int elevatorFollow = 14;
+        public static final int elevatorLead = 9;
+        public static final int elevatorFollow = 10;
         public static final int limitSwitchPort = 5;
         //all units should be in inches
         public static final double distanceFromGround = 6; //placeholder, measure distance from motor to the ground in inches
@@ -49,7 +51,7 @@ public final class Constants {
 
         public static double maxVelocity = 60; // inches per second
         public static double maxAcceleration = 60;
-        public static double max_output = .7; //percent of motor power
+        public static double max_output = 1; //percent of motor power
 
         // PID tuning values. this is going to require a lot of testing to fine tune. This is the foundation of the elevator PID loop
         public static double kP = 0.056; // full output until there is an error of 18 inches
@@ -61,7 +63,7 @@ public final class Constants {
 
         // We need to find the counts per revolution of the 
         // encoders on the elevator motors. 16 is a placeholder for now.
-        public static final int countsPerRevolution = 4096;
+        public static final int countsPerRevolution = 42;
         public static final int gearRatio = 40; // placeholder
         public static final double drumDiameter = 2;
         public static final double drumCircumference = Math.PI * drumDiameter;
@@ -85,15 +87,19 @@ public final class Constants {
 
     
     public static final class DriveConstants {
-        //This all needs to be changed
+        //not important rn
+        public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
+         public static final Matter CHASSIS    = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
+         public static final double LOOP_TIME  = 0.13; //s, 20ms + 110ms sprk max velocity lag
+         public static final double MAX_SPEED  = Units.feetToMeters(14.5);
 
         public static final int kFrontLeftDriveMotorPort = 4;
-        public static final int kRearLeftDriveMotorPort = 2;
+        public static final int kRearLeftDriveMotorPort = 1;
         public static final int kFrontRightDriveMotorPort = 6;
         public static final int kRearRightDriveMotorPort = 8;
     
         public static final int kFrontLeftTurningMotorPort = 3;
-        public static final int kRearLeftTurningMotorPort = 1;
+        public static final int kRearLeftTurningMotorPort = 2;
         public static final int kFrontRightTurningMotorPort = 5;
         public static final int kRearRightTurningMotorPort = 7;
 
@@ -138,7 +144,7 @@ public final class Constants {
     
     
         // Values to scale joystick inputs to desired states.
-        public static double kMaxSpeedMetersPerSecond = 5.5; // LOCKED IN AT 4.5
+        public static double kMaxSpeedMetersPerSecond = 4.5; // LOCKED IN AT 4.5
         public static final double kMaxRotationalSpeed =
             2 * Math.PI; //3*pi
     
@@ -155,6 +161,8 @@ public final class Constants {
         public static final double kaTurning = 0; // Default to zero
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI * 2;
         public static double kPDriveVel;
+        public static final double deadband = 0.05;
+
       }
     
       public static final class ModuleConstants {

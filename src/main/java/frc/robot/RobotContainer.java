@@ -4,22 +4,25 @@
 
 package frc.robot;
 
-import java.util.function.BooleanSupplier;
+import java.io.File;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AlgaeConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.DriveConstants;
+
 import frc.robot.commands.AlgaeAnalog;
 import frc.robot.commands.ChainAnalog;
 import frc.robot.commands.HomeElevator;
@@ -27,9 +30,11 @@ import frc.robot.commands.GenericCommand;
 import frc.robot.commands.IntakeAnalog;
 import frc.robot.subsystems.Algae_Intake;
 import frc.robot.subsystems.Coral_Intake;
-import frc.robot.subsystems.DriveSubsystem;
+//import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.SwerveSimulator; // Add this import statement
+import frc.robot.subsystems.SwerveSubsystem;
+import swervelib.SwerveInputStream;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -44,8 +49,10 @@ public class RobotContainer {
 
 	// Buttons for the Driver Controller
 
-	public static final DriveSubsystem m_driveTrain = new DriveSubsystem();
-	public static final SwerveSimulator m_sim = new SwerveSimulator(m_driveTrain);
+	//public static final DriveSubsystem m_driveTrain = new DriveSubsystem();
+	public static final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+                                                                                "swerve/neo"));
+	public static final SwerveSimulator m_sim = new SwerveSimulator(drivebase);
 	public static final Coral_Intake m_intake = new Coral_Intake();
 	public static final Algae_Intake m_algae = new Algae_Intake();
 	public static final Elevator m_chain = new Elevator();
@@ -56,20 +63,10 @@ public class RobotContainer {
 	// public static final PhotonCameraWrapper m_PhotonCam = new
 	// PhotonCameraWrapper();
 
-	public static final CommandXboxController driver = new CommandXboxController(0);
-	public static final CommandXboxController controller = new CommandXboxController(1);
-
-	public static final Trigger strumUp = new POVButton(controller.getHID(), 0);
-	public static final Trigger strumDown = new POVButton(controller.getHID(), 180);
-
-	public static final BooleanSupplier wham = () -> controller.getRightX() > 0;
-	public static final Trigger whammy = new Trigger(wham);
-	public static final Bumper pneumatics = new Bumper();
-	// JoystickButton turnOnButton = new JoystickButton(controller, 3);
+	public static final CommandXboxController driverXbox = new CommandXboxController(0);
+	public static final CommandXboxController controllerXbox = new CommandXboxController(1);
 
 	public final SendableChooser<Command> m_chooser;
-
-	// JoystickButton turnOnButton = new JoystickButton(controller, 3);
 
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -77,6 +74,7 @@ public class RobotContainer {
 	public RobotContainer() {
 
 		m_chooser = AutoBuilder.buildAutoChooser();
+		DriverStation.silenceJoystickConnectionWarning(true);
 		SmartDashboard.putData(m_chooser);
 		// registering pathplanner commands
 		NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
@@ -93,17 +91,45 @@ public class RobotContainer {
 
 		// Configure the button bindings
 		configureButtonBindings();
+		drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
 	}
+
+	SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
+			() -> driverXbox.getLeftY() * -1,
+			() -> driverXbox.getLeftX() * -1)
+			.withControllerRotationAxis(driverXbox::getRightX)
+			.deadband(DriveConstants.deadband)
+			.scaleTranslation(0.8)
+			.allianceRelativeControl(true);
+	/**
+	 * Clone's the angular velocity input stream and converts it to a fieldRelative
+	 * input stream.
+	 */
+	SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverXbox::getRightX,
+			driverXbox::getRightY)
+			.headingWhile(true);
+
+	/**
+	 * Clone's the angular velocity input stream and converts it to a robotRelative
+	 * input stream.
+	 */
+	SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
+			.allianceRelativeControl(false);
+
+	Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
+	Command driveFieldOrientedAngularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
 
 	// SmartDashboard command selecter
 	public Command getAutonomousCommand() {
+		// An example command will be run in autonomous
 		return m_chooser.getSelected();
 	}
 
 	public void init() {
 		m_intake.init();
 		m_algae.init();
-		m_chain.homeElevator();
+		m_chain.init();
+		//m_chain.homeElevator();
 		// solenoid.set(DoubleSolenoid.Value.kReverse);
 		// compressor.enableHybrid(80,120);
 		// m_colorSensor.init();
@@ -112,17 +138,17 @@ public class RobotContainer {
 	private void configureButtonBindings() {
 		// buttons assuming the setpoints are tuned
 		// operator buttons
-		controller.a().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // green (1) -> manny intake
-		controller.b().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // red (2) -> manny extake
-		controller.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
-		controller.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
-		controller.leftTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel - 1));
-		controller.rightTrigger().whileTrue(new ChainAnalog(m_chain, m_chain.elevatorLevel + 1));
-		controller.leftBumper().whileTrue(new HomeElevator(m_chain));
+		controllerXbox.a().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // green (1) -> manny intake
+		controllerXbox.b().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // red (2) -> manny extake
+		controllerXbox.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
+		controllerXbox.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
+		controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, -1));
+		controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, 1));
+		controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
 
 		// driver buttons
 		// sad losers, only having three buttons. I have so many. I am so powerful.
-		driver.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // right trigger is in
-		driver.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // left trigger is ou
+		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // right trigger is in
+		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // left trigger is ou
 	}
 }
