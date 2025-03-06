@@ -34,8 +34,8 @@ public final class Constants {
 
     public static final class ElevatorConstants{
         //motor CAN IDS and other ports
-        public static final int elevatorLead = 9;
-        public static final int elevatorFollow = 10;
+        public static final int elevatorLead = 10;
+        public static final int elevatorFollow = 9;
         public static final int limitSwitchPort = 5;
         //all units should be in inches
         public static final double distanceFromGround = 6; //placeholder, measure distance from motor to the ground in inches
@@ -51,7 +51,7 @@ public final class Constants {
 
         public static double maxVelocity = 60; // inches per second
         public static double maxAcceleration = 60;
-        public static double max_output = 1; //percent of motor power
+        public static double max_output = .1; //percent of motor power
 
         // PID tuning values. this is going to require a lot of testing to fine tune. This is the foundation of the elevator PID loop
         public static double kP = 0.056; // full output until there is an error of 18 inches
@@ -64,7 +64,7 @@ public final class Constants {
         // We need to find the counts per revolution of the 
         // encoders on the elevator motors. 16 is a placeholder for now.
         public static final int countsPerRevolution = 42;
-        public static final int gearRatio = 40; // placeholder
+        public static final int gearRatio = 64; // placeholder
         public static final double drumDiameter = 2;
         public static final double drumCircumference = Math.PI * drumDiameter;
         public static final double countsPerInch = (countsPerRevolution * gearRatio)/drumCircumference;

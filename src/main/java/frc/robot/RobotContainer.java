@@ -28,6 +28,7 @@ import frc.robot.commands.ChainAnalog;
 import frc.robot.commands.HomeElevator;
 import frc.robot.commands.GenericCommand;
 import frc.robot.commands.IntakeAnalog;
+import frc.robot.commands.ManualControl;
 import frc.robot.subsystems.Algae_Intake;
 import frc.robot.subsystems.Coral_Intake;
 //import frc.robot.subsystems.DriveSubsystem;
@@ -144,8 +145,10 @@ public class RobotContainer {
 		controllerXbox.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
 		controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, -1));
 		controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, 1));
-		controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
-
+		//controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
+		controllerXbox.leftBumper().whileTrue(new ManualControl(m_chain, -.1));
+		controllerXbox.rightBumper().whileTrue(new ManualControl(m_chain, .1));
+		controllerXbox.rightStick().whileTrue(new ManualControl(m_chain, 0));
 		// driver buttons
 		// sad losers, only having three buttons. I have so many. I am so powerful.
 		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // right trigger is in
