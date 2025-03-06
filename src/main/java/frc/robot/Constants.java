@@ -35,6 +35,7 @@ public final class Constants {
     public static final class ElevatorConstants{
         //motor CAN IDS and other ports
         public static final int elevatorLead = 10;
+        public static final int elevatorLeadSim = 15;
         public static final int elevatorFollow = 9;
         public static final int limitSwitchPort = 5;
         //all units should be in inches
@@ -60,6 +61,7 @@ public final class Constants {
         public static double kS = .2; // static friction ff (feedforward)
         public static double kG = 0.4; // gravity ff
         public static double kV = 0.19; // velocity ff - anticipates expected velocity
+        public static double kA = 0;
 
         // We need to find the counts per revolution of the 
         // encoders on the elevator motors. 16 is a placeholder for now.

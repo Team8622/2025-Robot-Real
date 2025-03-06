@@ -47,6 +47,9 @@ public class SwerveSubsystem extends SubsystemBase {
     double maxSpeed = DriveConstants.kMaxSpeedMetersPerSecond;
     File directory = new File(Filesystem.getDeployDirectory(), "swerve/neo");
     SwerveDrive swerveDrive;
+    AHRS navx;
+    DutyCycleEncoder absoluteEncoder;
+    private boolean wasCalibrating = true; // Assume it's calibrating at startup
     //DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0);
     public SwerveSubsystem(File directory) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -66,7 +69,7 @@ public class SwerveSubsystem extends SubsystemBase {
         AHRS navx = (AHRS)swerveDrive.getGyro().getIMU();
         for(SwerveModule m : swerveDrive.getModules())
         {
-        //System.out.println("Module Name: "+m.configuration.name);
+        System.out.println("Module Name: "+m.configuration.name);
         DutyCycleEncoder absoluteEncoder = (DutyCycleEncoder)m.configuration.absoluteEncoder.getAbsoluteEncoder();
         }
         setupPathPlanner();
@@ -76,7 +79,16 @@ public class SwerveSubsystem extends SubsystemBase {
     public void periodic() {
         //SmartDashboard.putNumber("NEW Absolute Encoder Offset", getAbsolutePosition());
         // This method will be called once per scheduler run
-    }
+        if (navx != null) {
+            boolean isCalibrating = navx.isCalibrating();
+            
+            // Print only when the calibration status changes
+            if (wasCalibrating != isCalibrating) {
+                System.
+                out.println("NavX Calibration Status Changed: " + !isCalibrating);
+                wasCalibrating = isCalibrating; // Update the previous state
+            }
+        }    }
 
     // public double getAbsolutePosition() {
     //     return absoluteEncoder.get() * 360.0; // Convert to degrees
