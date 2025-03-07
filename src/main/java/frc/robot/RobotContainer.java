@@ -143,8 +143,10 @@ public class RobotContainer {
 		controllerXbox.b().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // red (2) -> manny extake
 		controllerXbox.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
 		controllerXbox.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
-		controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, -1));
-		controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, 1));
+		// controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, -1));
+		// controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, 1));
+		controllerXbox.leftTrigger().whileTrue(new ManualControl(m_chain, -.15));
+		controllerXbox.rightTrigger().whileTrue(new ManualControl(m_chain, .15));
 		//controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
 		controllerXbox.leftBumper().whileTrue(new ManualControl(m_chain, -.1));
 		controllerXbox.rightBumper().whileTrue(new ManualControl(m_chain, .1));

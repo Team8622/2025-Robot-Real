@@ -237,8 +237,16 @@ public class Elevator extends GenericSubsystem {
         //if (bottomLimit.get() && power < 0) {
             //power = 0;
         //}
-        //primaryMotor.set(power);
-        primaryMotor.set(MathUtil.clamp(power, -ElevatorConstants.max_output, ElevatorConstants.max_output));
+        // if (bottomLimit.get() && (power < 0)){
+        //     primaryMotor.set(0);
+        //     System.out.println("ROBOT DOWN");
+        // }
+        // else{
+        //     primaryMotor.set(power);
+        //     //primaryMotor.set(MathUtil.clamp(power, -ElevatorConstants.max_output, ElevatorConstants.max_output));
+
+        // } 
+        primaryMotor.set(power);
     }
     public void start (int level) {
         this.setLevel(level);

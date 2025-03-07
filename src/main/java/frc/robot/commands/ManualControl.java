@@ -23,5 +23,9 @@ public class ManualControl extends Command {
   public void initialize() {
     m_elevator.setManualPower(speed);
   }
-    
+
+  @Override
+  public void end(boolean interrupted){
+      m_elevator.setManualPower(0);
+  }
 }

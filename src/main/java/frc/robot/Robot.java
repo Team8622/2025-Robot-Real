@@ -34,7 +34,6 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   private RobotContainer m_robotContainer;
-  private ElevatorSimSubsystem elevatorSimulation;
   //Thread m_visionThread;
 
 
@@ -59,7 +58,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    elevatorSimulation = new ElevatorSimSubsystem(); 
    
     m_robotContainer.init();
     //m_robotContainer.m_driveTrain.zeroHeading();
@@ -171,6 +169,5 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {
-        elevatorSimulation.simulationPeriodic();
   }
 }
