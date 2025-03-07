@@ -34,7 +34,7 @@ import frc.robot.subsystems.Coral_Intake;
 //import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Elevator;
 //import frc.robot.subsystems.SwerveSimulator; // Add this import statement
-import frc.robot.subsystems.SwerveSubsystem;
+//import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
 /**
@@ -51,8 +51,8 @@ public class RobotContainer {
 	// Buttons for the Driver Controller
 
 	//public static final DriveSubsystem m_driveTrain = new DriveSubsystem();
-	public static final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
-                                                                                "swerve/neo"));
+	//public static final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+                                                                               // "swerve/neo"));
 	//public static final SwerveSimulator m_sim = new SwerveSimulator(drivebase);
 	public static final Coral_Intake m_intake = new Coral_Intake();
 	public static final Algae_Intake m_algae = new Algae_Intake();
@@ -92,33 +92,33 @@ public class RobotContainer {
 
 		// Configure the button bindings
 		configureButtonBindings();
-		drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
+		// drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
 	}
 
-	SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-			() -> driverXbox.getLeftY() * -1,
-			() -> driverXbox.getLeftX() * -1)
-			.withControllerRotationAxis(driverXbox::getRightX)
-			.deadband(DriveConstants.deadband)
-			.scaleTranslation(0.8)
-			.allianceRelativeControl(true);
-	/**
-	 * Clone's the angular velocity input stream and converts it to a fieldRelative
-	 * input stream.
-	 */
-	SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverXbox::getRightX,
-			driverXbox::getRightY)
-			.headingWhile(true);
+	// SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
+	// 		() -> driverXbox.getLeftY() * -1,
+	// 		() -> driverXbox.getLeftX() * -1)
+	// 		.withControllerRotationAxis(driverXbox::getRightX)
+	// 		.deadband(DriveConstants.deadband)
+	// 		.scaleTranslation(0.8)
+	// 		.allianceRelativeControl(true);
+	// /**
+	//  * Clone's the angular velocity input stream and converts it to a fieldRelative
+	//  * input stream.
+	//  */
+	// SwerveInputStream driveDirectAngle = driveAngularVelocity.copy().withControllerHeadingAxis(driverXbox::getRightX,
+	// 		driverXbox::getRightY)
+	// 		.headingWhile(true);
 
-	/**
-	 * Clone's the angular velocity input stream and converts it to a robotRelative
-	 * input stream.
-	 */
-	SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
-			.allianceRelativeControl(false);
+	// /**
+	//  * Clone's the angular velocity input stream and converts it to a robotRelative
+	//  * input stream.
+	//  */
+	// SwerveInputStream driveRobotOriented = driveAngularVelocity.copy().robotRelative(true)
+	// 		.allianceRelativeControl(false);
 
-	Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
-	Command driveFieldOrientedAngularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
+	// Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
+	// Command driveFieldOrientedAngularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
 
 	// SmartDashboard command selecter
 	public Command getAutonomousCommand() {
