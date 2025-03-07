@@ -49,7 +49,7 @@ public class SwerveSubsystem extends SubsystemBase {
     SwerveDrive swerveDrive;
     AHRS navx;
     DutyCycleEncoder absoluteEncoder;
-    private boolean wasCalibrating = true; // Assume it's calibrating at startup
+    //private boolean wasCalibrating = true; // Assume it's calibrating at startup
     // DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0);
 
     public SwerveSubsystem(File directory) {
@@ -74,17 +74,17 @@ public class SwerveSubsystem extends SubsystemBase {
             System.out.println("Module Name: " + m.configuration.name);
             DutyCycleEncoder absoluteEncoder = (DutyCycleEncoder) m.configuration.absoluteEncoder.getAbsoluteEncoder();
         }
-        double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(11);
-        // Motor conversion factor is (PI * WHEEL DIAMETER IN METERS) / (GEAR RATIO).
-        // In this case the wheel diameter is 4 inches, which must be converted to
-        // meters to get meters/second.
-        // The gear ratio is 6.75 motor revolutions per wheel rotation.
-        // The encoder resolution per motor revolution is 1 per motor revolution.
-        double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4.1), 6);
-        System.out.println("\"conversionFactors\": {");
-        System.out.println("\t\"angle\": {\"factor\": " + angleConversionFactor + "},");
-        System.out.println("\t\"drive\": {\"factor\": " + driveConversionFactor + "}");
-        System.out.println("}");
+        // double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(11);
+        // // Motor conversion factor is (PI * WHEEL DIAMETER IN METERS) / (GEAR RATIO).
+        // // In this case the wheel diameter is 4 inches, which must be converted to
+        // // meters to get meters/second.
+        // // The gear ratio is 6.75 motor revolutions per wheel rotation.
+        // // The encoder resolution per motor revolution is 1 per motor revolution.
+        // double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4.1), 6);
+        // System.out.println("\"conversionFactors\": {");
+        // System.out.println("\t\"angle\": {\"factor\": " + angleConversionFactor + "},");
+        // System.out.println("\t\"drive\": {\"factor\": " + driveConversionFactor + "}");
+        // System.out.println("}");
         setupPathPlanner();
     }
 
@@ -93,15 +93,15 @@ public class SwerveSubsystem extends SubsystemBase {
         // SmartDashboard.putNumber("NEW Absolute Encoder Offset",
         // getAbsolutePosition());
         // This method will be called once per scheduler run
-        if (navx != null) {
-            boolean isCalibrating = navx.isCalibrating();
+        // if (navx != null) {
+        //     boolean isCalibrating = navx.isCalibrating();
 
-            // Print only when the calibration status changes
-            if (wasCalibrating != isCalibrating) {
-                System.out.println("NavX Calibration Status Changed: " + !isCalibrating);
-                wasCalibrating = isCalibrating; // Update the previous state
-            }
-        }
+        //     // Print only when the calibration status changes
+        //     if (wasCalibrating != isCalibrating) {
+        //         System.out.println("NavX Calibration Status Changed: " + !isCalibrating);
+        //         wasCalibrating = isCalibrating; // Update the previous state
+        //     }
+        // }
     }
 
     // public double getAbsolutePosition() {

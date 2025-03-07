@@ -33,7 +33,7 @@ import frc.robot.subsystems.Algae_Intake;
 import frc.robot.subsystems.Coral_Intake;
 //import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.SwerveSimulator; // Add this import statement
+//import frc.robot.subsystems.SwerveSimulator; // Add this import statement
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -53,7 +53,7 @@ public class RobotContainer {
 	//public static final DriveSubsystem m_driveTrain = new DriveSubsystem();
 	public static final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/neo"));
-	public static final SwerveSimulator m_sim = new SwerveSimulator(drivebase);
+	//public static final SwerveSimulator m_sim = new SwerveSimulator(drivebase);
 	public static final Coral_Intake m_intake = new Coral_Intake();
 	public static final Algae_Intake m_algae = new Algae_Intake();
 	public static final Elevator m_chain = new Elevator();

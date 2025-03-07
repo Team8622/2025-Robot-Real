@@ -45,12 +45,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     //AddressableLED m_led = new AddressableLED(9);
-    AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(60);
+    // AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(60);
     //m_led.setLength(m_ledBuffer.getLength());
 
-    for(var i = 0;i< m_ledBuffer.getLength();i++){
-      m_ledBuffer.setRGB(i, 255, 0, 0);
-    }
+    // for(var i = 0;i< m_ledBuffer.getLength();i++){
+    //   m_ledBuffer.setRGB(i, 255, 0, 0);
+    // }
     //m_led.setData(m_ledBuffer);
     //m_led.start();
 
