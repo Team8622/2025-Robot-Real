@@ -75,7 +75,7 @@ public class Elevator extends GenericSubsystem {
         leadConfig.voltageCompensation(12.0);
 
         encoder = primaryMotor.getEncoder();
-        bottomLimit = new DigitalInput(ElevatorConstants.limitSwitchPort);
+        //bottomLimit = new DigitalInput(ElevatorConstants.limitSwitchPort);
 
         constraints = new TrapezoidProfile.Constraints(
                 ElevatorConstants.maxVelocity,
@@ -106,37 +106,37 @@ public class Elevator extends GenericSubsystem {
     @Override
     public void periodic() {
         //primaryMotor.set(-1); //TODO: temporary test
-        currentPos = encoder.getPosition() / ElevatorConstants.countsPerInch;
+        // currentPos = encoder.getPosition() / ElevatorConstants.countsPerInch;
 
-        // Calculate the next state and update current state
-        currentState = profile.calculate(0.020, currentState, goalState); // 20ms control loop
+        // // Calculate the next state and update current state
+        // currentState = profile.calculate(0.020, currentState, goalState); // 20ms control loop
 
-        if (bottomLimit.get()) {
-            handleBottomLimit();
-        }
+        // if (bottomLimit.get()) {
+        //     handleBottomLimit();
+        // }
 
-        if (getHeightInches() > ElevatorConstants.maxPos) {
-            stopMotors();
-        }
+        // if (getHeightInches() > ElevatorConstants.maxPos) {
+        //     stopMotors();
+        // }
 
-        // Only run control if homed
-        if (isHomed) {
-            double pidOutput = pidController.calculate(getHeightInches(), currentState.position);
-            double ff = calculateFeedForward(currentState);
+        // // Only run control if homed
+        // if (isHomed) {
+        //     double pidOutput = pidController.calculate(getHeightInches(), currentState.position);
+        //     double ff = calculateFeedForward(currentState);
 
-            double outputPower = MathUtil.clamp(
-                    pidOutput + ff,
-                    -ElevatorConstants.max_output,
-                    ElevatorConstants.max_output);
+        //     double outputPower = MathUtil.clamp(
+        //             pidOutput + ff,
+        //             -ElevatorConstants.max_output,
+        //             ElevatorConstants.max_output);
 
-            SmartDashboard.putNumber("PID Output", pidOutput);
-            SmartDashboard.putNumber("Feedforward", ff);
-            SmartDashboard.putNumber("Output Power", outputPower);
-            //primaryMotor.set(outputPower);
-        }
+        //     SmartDashboard.putNumber("PID Output", pidOutput);
+        //     SmartDashboard.putNumber("Feedforward", ff);
+        //     SmartDashboard.putNumber("Output Power", outputPower);
+        //     //primaryMotor.set(outputPower);
+        // }
 
-        // Update SmartDashboard
-        updateTelemetry();
+        // // Update SmartDashboard
+        // updateTelemetry();
     }
 
     private void handleBottomLimit() {
