@@ -3,13 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.137568788270693,
-        "y": 6.448211340002111
+        "x": 7.581546267947635,
+        "y": 4.015330546611064
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.170674586940456,
-        "y": 6.7939956252639355
+        "x": 6.635850566142314,
+        "y": 4.094770606788429
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.276221198004645,
+        "y": 5.7432097563872455
+      },
+      "prevControl": {
+        "x": 5.570365488177679,
+        "y": 5.4953322039440025
+      },
+      "nextControl": {
+        "x": 4.972530880489864,
+        "y": 5.999131816142313
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +36,8 @@
         "y": 5.322876157407406
       },
       "prevControl": {
-        "x": 3.065623503141812,
-        "y": 7.295213045076325
+        "x": 4.171529574007602,
+        "y": 6.060969997096705
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,23 +46,23 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 2.0,
       "rotationDegrees": -60.84132151175569
     },
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 2.0,
       "rotationDegrees": -61.74623413779689
     },
     {
-      "waypointRelativePos": 1.75,
+      "waypointRelativePos": 2.75,
       "rotationDegrees": -51.93246469298069
     },
     {
-      "waypointRelativePos": 1.75,
+      "waypointRelativePos": 2.75,
       "rotationDegrees": -53.32463754753315
     },
     {
-      "waypointRelativePos": 1.95,
+      "waypointRelativePos": 2.95,
       "rotationDegrees": 0.0
     }
   ],
@@ -55,7 +71,7 @@
   "eventMarkers": [
     {
       "name": "elevatorL4",
-      "waypointRelativePos": 0.55,
+      "waypointRelativePos": 1.1,
       "endWaypointRelativePos": null,
       "command": null
     }

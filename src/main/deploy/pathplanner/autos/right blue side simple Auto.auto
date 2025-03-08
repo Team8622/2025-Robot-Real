@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "first of new work path"
+            "pathName": "left first of new work path"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "second of new work path"
+            "pathName": "right reverse second of new work path"
           }
         }
       ]
