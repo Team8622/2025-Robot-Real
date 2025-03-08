@@ -146,7 +146,7 @@ public final class Constants {
     
     
         // Values to scale joystick inputs to desired states.
-        public static double kMaxSpeedMetersPerSecond = 4.5; // LOCKED IN AT 4.5
+        public static double kMaxSpeedMetersPerSecond = 3.5; // LOCKED IN AT 4.5
         public static final double kMaxRotationalSpeed =
             2 * Math.PI; //3*pi
     

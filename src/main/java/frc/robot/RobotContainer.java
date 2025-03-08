@@ -96,7 +96,7 @@ public class RobotContainer {
 	}
 
 	SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-			() -> driverXbox.getLeftY() * -1,
+			() -> driverXbox.getLeftY(),
 			() -> driverXbox.getLeftX() * -1)
 			.withControllerRotationAxis(driverXbox::getRightX)
 			.deadband(DriveConstants.deadband)
@@ -142,11 +142,11 @@ public class RobotContainer {
 		controllerXbox.a().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // green (1) -> manny intake
 		controllerXbox.b().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // red (2) -> manny extake
 		controllerXbox.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
-		controllerXbox.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
+		controllerXbox.x().whileTrue(new IntakeAnalog(m_intake, -.6)); // blue (4) -> wrist deposit
 		// controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, -1));
 		// controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, 1));
-		controllerXbox.leftTrigger().whileTrue(new ManualControl(m_chain, -.15));
-		controllerXbox.rightTrigger().whileTrue(new ManualControl(m_chain, .15));
+		controllerXbox.leftTrigger().whileTrue(new ManualControl(m_chain, -.20));
+		controllerXbox.rightTrigger().whileTrue(new ManualControl(m_chain, .20));
 		//controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
 		controllerXbox.leftBumper().whileTrue(new ManualControl(m_chain, -.1));
 		controllerXbox.rightBumper().whileTrue(new ManualControl(m_chain, .1));
