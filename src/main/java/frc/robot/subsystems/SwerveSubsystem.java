@@ -74,17 +74,17 @@ public class SwerveSubsystem extends SubsystemBase {
             System.out.println("Module Name: " + m.configuration.name);
             DutyCycleEncoder absoluteEncoder = (DutyCycleEncoder) m.configuration.absoluteEncoder.getAbsoluteEncoder();
         }
-        // double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(11);
+        double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(10.25);
         // // Motor conversion factor is (PI * WHEEL DIAMETER IN METERS) / (GEAR RATIO).
         // // In this case the wheel diameter is 4 inches, which must be converted to
         // // meters to get meters/second.
         // // The gear ratio is 6.75 motor revolutions per wheel rotation.
         // // The encoder resolution per motor revolution is 1 per motor revolution.
-        // double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4.1), 6);
-        // System.out.println("\"conversionFactors\": {");
-        // System.out.println("\t\"angle\": {\"factor\": " + angleConversionFactor + "},");
-        // System.out.println("\t\"drive\": {\"factor\": " + driveConversionFactor + "}");
-        // System.out.println("}");
+        double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4.1), 6.55);
+        System.out.println("\"conversionFactors\": {");
+        System.out.println("\t\"angle\": {\"factor\": " + angleConversionFactor + "},");
+        System.out.println("\t\"drive\": {\"factor\": " + driveConversionFactor + "}");
+        System.out.println("}");
         setupPathPlanner();
     }
 
