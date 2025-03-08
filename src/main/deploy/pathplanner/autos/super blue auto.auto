@@ -17,6 +17,18 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "coralExtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "second of new work path"
@@ -25,7 +37,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 3.5
           }
         },
         {
@@ -41,9 +53,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "fourth of new work path"
+            "name": "coralExtake"
           }
         },
         {
@@ -55,7 +67,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "fifth of fourth of new work path"
+            "pathName": "fourth of new work path"
           }
         }
       ]

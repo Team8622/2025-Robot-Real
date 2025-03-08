@@ -7,19 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "first of new work path"
+            "pathName": "reverse of first of new work path"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralExtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "second of new work path"
+            "pathName": "reverse of second of new work path"
           }
         }
       ]
