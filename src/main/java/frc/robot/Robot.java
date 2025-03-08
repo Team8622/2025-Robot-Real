@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Drive;
 //import frc.robot.subsystems.ElevatorSimSubsystem;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -145,6 +146,9 @@ public class Robot extends TimedRobot {
        m_autonomousCommand.cancel();
     }
     CommandScheduler.getInstance().run();
+    RobotContainer.m_driveTrain.setDefaultCommand(
+       new Drive(RobotContainer.m_driveTrain)
+    );
   }
 
   /** This function is called periodically during operator control. */
