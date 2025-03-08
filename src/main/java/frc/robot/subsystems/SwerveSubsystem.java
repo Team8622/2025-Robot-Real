@@ -47,7 +47,11 @@ public class SwerveSubsystem extends SubsystemBase {
     double maxSpeed = DriveConstants.kMaxSpeedMetersPerSecond;
     File directory = new File(Filesystem.getDeployDirectory(), "swerve/neo");
     SwerveDrive swerveDrive;
-    //DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0);
+    AHRS navx;
+    DutyCycleEncoder absoluteEncoder;
+    //private boolean wasCalibrating = true; // Assume it's calibrating at startup
+    // DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0);
+
     public SwerveSubsystem(File directory) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
         try {
@@ -62,24 +66,46 @@ public class SwerveSubsystem extends SubsystemBase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
-        AHRS navx = (AHRS)swerveDrive.getGyro().getIMU();
-        for(SwerveModule m : swerveDrive.getModules())
-        {
-        //System.out.println("Module Name: "+m.configuration.name);
-        DutyCycleEncoder absoluteEncoder = (DutyCycleEncoder)m.configuration.absoluteEncoder.getAbsoluteEncoder();
+        swerveDrive.setChassisDiscretization(true, 0.02);
+        swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot
+                                                 // via angle.
+        AHRS navx = (AHRS) swerveDrive.getGyro().getIMU();
+        for (SwerveModule m : swerveDrive.getModules()) {
+            System.out.println("Module Name: " + m.configuration.name);
+            DutyCycleEncoder absoluteEncoder = (DutyCycleEncoder) m.configuration.absoluteEncoder.getAbsoluteEncoder();
         }
+        // double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(11);
+        // // Motor conversion factor is (PI * WHEEL DIAMETER IN METERS) / (GEAR RATIO).
+        // // In this case the wheel diameter is 4 inches, which must be converted to
+        // // meters to get meters/second.
+        // // The gear ratio is 6.75 motor revolutions per wheel rotation.
+        // // The encoder resolution per motor revolution is 1 per motor revolution.
+        // double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4.1), 6);
+        // System.out.println("\"conversionFactors\": {");
+        // System.out.println("\t\"angle\": {\"factor\": " + angleConversionFactor + "},");
+        // System.out.println("\t\"drive\": {\"factor\": " + driveConversionFactor + "}");
+        // System.out.println("}");
         setupPathPlanner();
     }
 
     @Override
     public void periodic() {
-        //SmartDashboard.putNumber("NEW Absolute Encoder Offset", getAbsolutePosition());
+        // SmartDashboard.putNumber("NEW Absolute Encoder Offset",
+        // getAbsolutePosition());
         // This method will be called once per scheduler run
+        // if (navx != null) {
+        //     boolean isCalibrating = navx.isCalibrating();
+
+        //     // Print only when the calibration status changes
+        //     if (wasCalibrating != isCalibrating) {
+        //         System.out.println("NavX Calibration Status Changed: " + !isCalibrating);
+        //         wasCalibrating = isCalibrating; // Update the previous state
+        //     }
+        // }
     }
 
     // public double getAbsolutePosition() {
-    //     return absoluteEncoder.get() * 360.0; // Convert to degrees
+    // return absoluteEncoder.get() * 360.0; // Convert to degrees
     // }
 
     public void setupPathPlanner() {
@@ -145,11 +171,11 @@ public class SwerveSubsystem extends SubsystemBase {
         // IF USING CUSTOM PATHFINDER ADD BEFORE THIS LINE
         PathfindingCommand.warmupCommand().schedule();
     }
-    
+
     public SwerveDrive getSwerveDrive() {
         return swerveDrive;
     }
-    
+
     /**
      * Drive the robot given a chassis field oriented velocity.
      *
@@ -168,12 +194,11 @@ public class SwerveSubsystem extends SubsystemBase {
         swerveDrive.drive(velocity);
     }
 
-    public void drive(Translation2d translation, double rotation, boolean fieldRelative)
-    {
-      swerveDrive.drive(translation,
-                        rotation,
-                        fieldRelative,
-                        false); // Open loop is disabled since it shouldn't be used most of the time.
+    public void drive(Translation2d translation, double rotation, boolean fieldRelative) {
+        swerveDrive.drive(translation,
+                rotation,
+                fieldRelative,
+                false); // Open loop is disabled since it shouldn't be used most of the time.
     }
 
     /**

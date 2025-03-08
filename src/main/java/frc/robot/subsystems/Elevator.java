@@ -63,10 +63,11 @@ public class Elevator extends GenericSubsystem {
         followerMotor = new SparkMax(ElevatorConstants.elevatorFollow, MotorType.kBrushless);
         // done using rev hardware client
         
-        followerConfig.follow(9, true);
         followerConfig.idleMode(IdleMode.kBrake);
         followerConfig.smartCurrentLimit(50);
         followerConfig.voltageCompensation(12.0);
+        followerConfig.follow(10, true);
+
         // Configure follower
         //followerMotor.configure(followerConfig, null, null);
         leadConfig.idleMode(IdleMode.kBrake);
@@ -74,7 +75,7 @@ public class Elevator extends GenericSubsystem {
         leadConfig.voltageCompensation(12.0);
 
         encoder = primaryMotor.getEncoder();
-        bottomLimit = new DigitalInput(ElevatorConstants.limitSwitchPort);
+        //bottomLimit = new DigitalInput(ElevatorConstants.limitSwitchPort);
 
         constraints = new TrapezoidProfile.Constraints(
                 ElevatorConstants.maxVelocity,
@@ -104,38 +105,38 @@ public class Elevator extends GenericSubsystem {
 
     @Override
     public void periodic() {
-        primaryMotor.set(-1); //TODO: temporary
-        currentPos = encoder.getPosition() / ElevatorConstants.countsPerInch;
+        //primaryMotor.set(-1); //TODO: temporary test
+        // currentPos = encoder.getPosition() / ElevatorConstants.countsPerInch;
 
-        // Calculate the next state and update current state
-        currentState = profile.calculate(0.020, currentState, goalState); // 20ms control loop
+        // // Calculate the next state and update current state
+        // currentState = profile.calculate(0.020, currentState, goalState); // 20ms control loop
 
-        if (bottomLimit.get()) {
-            handleBottomLimit();
-        }
+        // if (bottomLimit.get()) {
+        //     handleBottomLimit();
+        // }
 
-        if (getHeightInches() > ElevatorConstants.maxPos) {
-            stopMotors();
-        }
+        // if (getHeightInches() > ElevatorConstants.maxPos) {
+        //     stopMotors();
+        // }
 
-        // Only run control if homed
-        if (isHomed) {
-            double pidOutput = pidController.calculate(getHeightInches(), currentState.position);
-            double ff = calculateFeedForward(currentState);
+        // // Only run control if homed
+        // if (isHomed) {
+        //     double pidOutput = pidController.calculate(getHeightInches(), currentState.position);
+        //     double ff = calculateFeedForward(currentState);
 
-            double outputPower = MathUtil.clamp(
-                    pidOutput + ff,
-                    -ElevatorConstants.max_output,
-                    ElevatorConstants.max_output);
+        //     double outputPower = MathUtil.clamp(
+        //             pidOutput + ff,
+        //             -ElevatorConstants.max_output,
+        //             ElevatorConstants.max_output);
 
-            SmartDashboard.putNumber("PID Output", pidOutput);
-            SmartDashboard.putNumber("Feedforward", ff);
-            SmartDashboard.putNumber("Output Power", outputPower);
-            //primaryMotor.set(outputPower);
-        }
+        //     SmartDashboard.putNumber("PID Output", pidOutput);
+        //     SmartDashboard.putNumber("Feedforward", ff);
+        //     SmartDashboard.putNumber("Output Power", outputPower);
+        //     //primaryMotor.set(outputPower);
+        // }
 
-        // Update SmartDashboard
-        updateTelemetry();
+        // // Update SmartDashboard
+        // updateTelemetry();
     }
 
     private void handleBottomLimit() {
@@ -168,7 +169,7 @@ public class Elevator extends GenericSubsystem {
 
     public void setPositionInches(double inches) {
         if (!isHomed && inches > 0) {
-            //System.out.println("Warning: Elevator not homed! Home first before moving to positions.");
+            System.out.println("Warning: Elevator not homed! Home first before moving to positions.");
             return;
         }
 
@@ -189,7 +190,11 @@ public class Elevator extends GenericSubsystem {
         SmartDashboard.putNumber("Elevator Current", primaryMotor.getOutputCurrent());
         SmartDashboard.putNumber("Elevator Velocity", currentState.velocity);
         SmartDashboard.putNumber("Encoder Position", encoder.getPosition());
-    }
+        SmartDashboard.putNumber("Lead Velocity", primaryMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Follow Velocity", followerMotor.getEncoder().getVelocity());
+
+    }   
+
 
     public double getHeightInches() {
         return encoder.getPosition() / ElevatorConstants.countsPerInch;
@@ -229,11 +234,19 @@ public class Elevator extends GenericSubsystem {
             power = 0;
         }
 
-        if (bottomLimit.get() && power < 0) {
-            power = 0;
-        }
+        //if (bottomLimit.get() && power < 0) {
+            //power = 0;
+        //}
+        // if (bottomLimit.get() && (power < 0)){
+        //     primaryMotor.set(0);
+        //     System.out.println("ROBOT DOWN");
+        // }
+        // else{
+        //     primaryMotor.set(power);
+        //     //primaryMotor.set(MathUtil.clamp(power, -ElevatorConstants.max_output, ElevatorConstants.max_output));
 
-        primaryMotor.set(MathUtil.clamp(power, -ElevatorConstants.max_output, ElevatorConstants.max_output));
+        // } 
+        primaryMotor.set(power);
     }
     public void start (int level) {
         this.setLevel(level);

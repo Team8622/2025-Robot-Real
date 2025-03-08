@@ -28,11 +28,12 @@ import frc.robot.commands.ChainAnalog;
 import frc.robot.commands.HomeElevator;
 import frc.robot.commands.GenericCommand;
 import frc.robot.commands.IntakeAnalog;
+import frc.robot.commands.ManualControl;
 import frc.robot.subsystems.Algae_Intake;
 import frc.robot.subsystems.Coral_Intake;
 //import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.SwerveSimulator; // Add this import statement
+//import frc.robot.subsystems.SwerveSimulator; // Add this import statement
 import frc.robot.subsystems.SwerveSubsystem;
 import swervelib.SwerveInputStream;
 
@@ -52,7 +53,7 @@ public class RobotContainer {
 	//public static final DriveSubsystem m_driveTrain = new DriveSubsystem();
 	public static final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                                 "swerve/neo"));
-	public static final SwerveSimulator m_sim = new SwerveSimulator(drivebase);
+	//public static final SwerveSimulator m_sim = new SwerveSimulator(drivebase);
 	public static final Coral_Intake m_intake = new Coral_Intake();
 	public static final Algae_Intake m_algae = new Algae_Intake();
 	public static final Elevator m_chain = new Elevator();
@@ -142,10 +143,14 @@ public class RobotContainer {
 		controllerXbox.b().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // red (2) -> manny extake
 		controllerXbox.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
 		controllerXbox.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
-		controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, -1));
-		controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, 1));
-		controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
-
+		// controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, -1));
+		// controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, 1));
+		controllerXbox.leftTrigger().whileTrue(new ManualControl(m_chain, -.15));
+		controllerXbox.rightTrigger().whileTrue(new ManualControl(m_chain, .15));
+		//controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
+		controllerXbox.leftBumper().whileTrue(new ManualControl(m_chain, -.1));
+		controllerXbox.rightBumper().whileTrue(new ManualControl(m_chain, .1));
+		controllerXbox.rightStick().whileTrue(new ManualControl(m_chain, 0));
 		// driver buttons
 		// sad losers, only having three buttons. I have so many. I am so powerful.
 		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // right trigger is in
