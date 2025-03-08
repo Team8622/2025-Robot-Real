@@ -6,7 +6,10 @@
     "red Folder",
     "blue Folder"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "red auto Folder",
+    "blue auto Folder"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
