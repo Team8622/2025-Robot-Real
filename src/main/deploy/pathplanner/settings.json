@@ -7,8 +7,7 @@
     "blue Folder"
   ],
   "autoFolders": [
-    "blue auto Folder",
-    "red auto Folder"
+    "blue auto Folder"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

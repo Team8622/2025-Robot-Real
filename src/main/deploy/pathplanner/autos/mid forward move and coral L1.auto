@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "reverse mid first of new work path"
+            "pathName": "mid blue sad Path"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.0
           }
         },
         {
@@ -27,17 +27,11 @@
           "data": {
             "waitTime": 2.0
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "reverse of second of new work path"
-          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "red auto Folder",
+  "folder": "blue auto Folder",
   "choreoAuto": false
 }
