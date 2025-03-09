@@ -64,14 +64,14 @@ public class Elevator extends GenericSubsystem {
         // done using rev hardware client
         
         followerConfig.idleMode(IdleMode.kBrake);
-        followerConfig.smartCurrentLimit(50);
+        followerConfig.smartCurrentLimit(20);
         followerConfig.voltageCompensation(12.0);
         followerConfig.follow(10, true);
 
         // Configure follower
         //followerMotor.configure(followerConfig, null, null);
         leadConfig.idleMode(IdleMode.kBrake);
-        leadConfig.smartCurrentLimit(50);
+        leadConfig.smartCurrentLimit(20);
         leadConfig.voltageCompensation(12.0);
 
         encoder = primaryMotor.getEncoder();

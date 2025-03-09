@@ -98,10 +98,10 @@ public class RobotContainer {
 	SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
 			() -> driverXbox.getLeftY() * 1,
 			() -> driverXbox.getLeftX() * 1)
-			.withControllerRotationAxis(driverXbox::getRightX)
+			.withControllerRotationAxis(() -> driverXbox.getRightX() * -1)
 			.deadband(DriveConstants.deadband)
 			.scaleTranslation(0.8)
-			.allianceRelativeControl(true);
+			.allianceRelativeControl(false);
 	/**
 	 * Clone's the angular velocity input stream and converts it to a fieldRelative
 	 * input stream.
@@ -146,8 +146,8 @@ public class RobotContainer {
 		controllerXbox.x().whileTrue(new IntakeAnalog(m_intake, -.6)); // blue (4) -> wrist deposit
 		// controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, -1));
 		// controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, 1));
-		controllerXbox.leftTrigger().whileTrue(new ManualControl(m_chain, -.20));
-		controllerXbox.rightTrigger().whileTrue(new ManualControl(m_chain, .20));
+		controllerXbox.leftTrigger().whileTrue(new ManualControl(m_chain, -.40));
+		controllerXbox.rightTrigger().whileTrue(new ManualControl(m_chain, .40));
 		//controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
 		controllerXbox.leftBumper().whileTrue(new ManualControl(m_chain, -.1));
 		controllerXbox.rightBumper().whileTrue(new ManualControl(m_chain, .1));
