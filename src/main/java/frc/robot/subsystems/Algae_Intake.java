@@ -25,69 +25,59 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.CANConstants;
 
 public class Algae_Intake extends GenericSubsystem {
-  
-  public SparkMax m_lead;
-  public SparkMax m_feeder;
-  
-  //The manipulator starts being as closed as possible (starting position)
-  //for closePos: 0 = no piece (init), 1 = cone, 2 = cube
-  public boolean isOn = false;
-  //public int closePos = 0;
 
-  /*
-  private double kp = MannyConstants.kPManny;
-  private double ki = MannyConstants.kIManny;
-  private double kd = MannyConstants.kDManny;
-  */
+	public SparkMax m_lead;
+	
+	// The manipulator starts being as closed as possible (starting position)
+	// for closePos: 0 = no piece (init), 1 = cone, 2 = cube
+	public boolean isOn = false;
+	// public int closePos = 0;
 
-  /*
-  *Constructor
-  *defines a PID Controller with the subsystem, muy importante
-  */
-  public Algae_Intake() {
-  }
+	/*
+	 * private double kp = MannyConstants.kPManny;
+	 * private double ki = MannyConstants.kIManny;
+	 * private double kd = MannyConstants.kDManny;
+	 */
 
-  public void init(){
-    //initialize all the things
-    m_lead = new SparkMax(CANConstants.algaeLead, MotorType.kBrushless);
-    //configure spark maxes
-    SparkMaxConfig m_lead_config = new SparkMaxConfig();
-    m_lead_config
-    .inverted(true)
-    .idleMode(IdleMode.kCoast);
-    m_lead.configure(m_lead_config, ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
+	/*
+	 * Constructor
+	 * defines a PID Controller with the subsystem, muy importante
+	 */
+	public Algae_Intake() {
+	}
 
-    m_feeder = new SparkMax(CANConstants.algaeFollow, MotorType.kBrushless);
-    SparkMaxConfig m_feeder_config = new SparkMaxConfig();
-    m_feeder_config
-    .inverted(true)
-    .idleMode(IdleMode.kCoast);    
-    m_feeder.configure(m_feeder_config, ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
-  }
+	public void init() {
+		// initialize all the things
+		m_lead = new SparkMax(CANConstants.algaeLead, MotorType.kBrushless);
+		// configure spark maxes
+		SparkMaxConfig m_lead_config = new SparkMaxConfig();
+		m_lead_config
+				.inverted(true)
+				.idleMode(IdleMode.kCoast);
+		m_lead.configure(m_lead_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+	}
 
-  @Override
-  public void periodic() {
-    SmartDashboard.putBoolean("Coral Intake", isOn);
-  }
+	@Override
+	public void periodic() {
+		SmartDashboard.putBoolean("Coral Intake", isOn);
+	}
 
-  public void start(double speed){
-    m_lead.set(speed);
-    m_feeder.set(-speed);
-    
-    isOn = true;
-  }
+	public void start(double speed) {
+		m_lead.set(speed);
 
-  public void stop(){
-    m_lead.set(0);
-    m_feeder.set(0);
-    isOn = false;
-  }
-  
-  public Command startCommand(double speed){
-    return this.run(()->start(speed));
-  }
+		isOn = true;
+	}
 
-  public Command stopCommand(){
-    return this.run(()->stop());
-  }
+	public void stop() {
+		m_lead.set(0);
+		isOn = false;
+	}
+
+	public Command startCommand(double speed) {
+		return this.run(() -> start(speed));
+	}
+
+	public Command stopCommand() {
+		return this.run(() -> stop());
+	}
 }

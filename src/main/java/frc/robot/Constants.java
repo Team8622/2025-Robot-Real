@@ -26,8 +26,7 @@ public final class Constants {
     public static final class CANConstants {
 		public static final int intakeMain = 13;
         public static final int intakeSushi = 14;
-        public static final int algaeLead = 11;
-        public static final int algaeFollow = 12;
+        public static final int algaeLead = 12;
         public static final int armsMain = 15;
         public static final int armsFollow = 16;
     }
@@ -75,15 +74,15 @@ public final class Constants {
     
 
     public static final class IntakeConstants {
-        public static final double inSpeed = -.25;
+        public static final double inSpeed = -.6;
         public static final double outSpeed = .25;
 
 
     }
 
     public static final class AlgaeConstants {
-        public static final double vacuum = .3;
-        public static final double spitup = -0.3;
+        public static final double vacuum = .08;
+        public static final double spitup = -0.08;
     }
 
 
