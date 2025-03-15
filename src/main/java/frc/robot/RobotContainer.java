@@ -142,8 +142,13 @@ public class RobotContainer {
 		// operator buttons
 		controllerXbox.a().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // green (1) -> manny intake
 		controllerXbox.b().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // red (2) -> manny extake
-		controllerXbox.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
-		controllerXbox.x().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup)); // blue (4) -> wrist deposit
+		controllerXbox.x().whileTrue(new IntakeAnalog(m_intake, -0.6)); // blue (4) -> wrist deposit
+		// NOTE: Y button unused.
+		// controllerXbox.y().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum)); // yellow (3) -> manny LAUNCH CUBE
+		
+		controllerXbox.povUp().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.vacuum));
+		controllerXbox.povDown().whileTrue(new AlgaeAnalog(m_algae, AlgaeConstants.spitup));
+
 		// controllerXbox.leftTrigger().whileTrue(new ChainAnalog(m_chain, -1));
 		// controllerXbox.rightTrigger().whileTrue(new ChainAnalog(m_chain, 1));
 		controllerXbox.leftTrigger().whileTrue(new ManualControl(m_chain, -.40));
@@ -151,6 +156,7 @@ public class RobotContainer {
 		//controllerXbox.leftBumper().whileTrue(new HomeElevator(m_chain));
 		controllerXbox.leftBumper().whileTrue(new ManualControl(m_chain, -.1));
 		controllerXbox.rightBumper().whileTrue(new ManualControl(m_chain, .1));
+
 				// driver buttons
 		// sad losers, only having three buttons. I have so many. I am so powerful.
 		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // right trigger is in

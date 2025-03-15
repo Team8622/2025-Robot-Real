@@ -14,8 +14,10 @@ import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.MotorSafety;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -109,6 +111,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Yaw I guess", m_robotContainer.m_PhotonCam.getVisionResultYaw().getX());
     }*/
     //RobotContainer.m_driveTrain.periodic();
+    var alliance = DriverStation.getAlliance();
+    SmartDashboard.putBoolean("Alliance present?", alliance.isPresent());
+    if (alliance.isPresent()) {
+      SmartDashboard.putBoolean("Alliance (is red?)", alliance.get() == DriverStation.Alliance.Red);
+    }
     CommandScheduler.getInstance().run();
     MotorSafety.checkMotors();
   }
