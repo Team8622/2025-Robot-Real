@@ -76,6 +76,8 @@ public final class Constants {
     public static final class IntakeConstants {
         public static final double inSpeed = -.25;
         public static final double outSpeed = .25;
+        public static final double fastSpeed = -.6;
+
 
 
     }

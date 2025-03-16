@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 16.30524605415963,
-        "y": 1.051845736116976
+        "x": 7.592315838788006,
+        "y": 4.031427001953125
       },
       "prevControl": null,
       "nextControl": {
-        "x": 16.28343188311438,
-        "y": 1.3228365099103496
+        "x": 7.334328354107666,
+        "y": 3.1878824748754715
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 15.183878965635556,
-        "y": 1.9017733187288843
+        "x": 6.535410441385555,
+        "y": 2.6378078464438532
       },
       "prevControl": {
-        "x": 15.429855443821882,
-        "y": 1.5415068516130697
+        "x": 6.758059695750735,
+        "y": 2.8342630708837167
       },
       "nextControl": {
-        "x": 14.84330576303843,
-        "y": 2.40058973157728
+        "x": 6.3104387803604745,
+        "y": 2.4393034396570177
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 14.518655313027871,
-        "y": 3.8428437104096282
+        "x": 5.197127064282596,
+        "y": 2.8622721077850963
       },
       "prevControl": {
-        "x": 14.49859574094476,
-        "y": 4.092037638039983
+        "x": 4.96138079495476,
+        "y": 2.665816883345233
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,20 +47,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "elevatorL4",
-      "waypointRelativePos": 1.5,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "coralExtake",
-      "waypointRelativePos": 2.0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -71,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 179.95403283948792
+    "rotation": 119.93151184050772
   },
   "reversed": false,
-  "folder": "red Folder",
+  "folder": "blue Folder",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 124.65002609221223
+    "rotation": 179.88874619902094
   },
   "useDefaultConstraints": true
 }

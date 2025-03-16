@@ -268,8 +268,10 @@ public class SwerveSubsystem extends SubsystemBase {
     public void zeroGyroWithAlliance() {
         if (isRedAlliance()) {
             zeroGyro();
+            System.out.println("Gyro set to 0");
             // Set the pose 180 degrees
             resetOdometry(new Pose2d(getPose().getTranslation(), Rotation2d.fromDegrees(180)));
+            System.out.println("Gyro set to 180");
         } else {
             zeroGyro();
         }
@@ -295,7 +297,15 @@ public class SwerveSubsystem extends SubsystemBase {
     public Rotation2d getHeading() {
         return getPose().getRotation();
     }
-
+    
+    public int getJoystickAllianceInversion(){
+        if(isRedAlliance()) {
+            return -1;
+        }
+        else {
+            return 1;
+        }
+    }
     /**
      * Get the chassis speeds based on controller input of 2 joysticks. One for
      * speeds in which direction. The other for

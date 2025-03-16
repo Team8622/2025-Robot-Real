@@ -53,7 +53,7 @@ public class Algae_Intake extends GenericSubsystem {
 		SparkMaxConfig m_lead_config = new SparkMaxConfig();
 		m_lead_config
 				.inverted(true)
-				.idleMode(IdleMode.kCoast);
+				.idleMode(IdleMode.kBrake);
 		m_lead.configure(m_lead_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 	}
 

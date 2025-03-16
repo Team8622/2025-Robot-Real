@@ -29,6 +29,7 @@ import frc.robot.commands.HomeElevator;
 import frc.robot.commands.GenericCommand;
 import frc.robot.commands.IntakeAnalog;
 import frc.robot.commands.ManualControl;
+import frc.robot.commands.zeroGyro;
 import frc.robot.subsystems.Algae_Intake;
 import frc.robot.subsystems.Coral_Intake;
 //import frc.robot.subsystems.DriveSubsystem;
@@ -68,18 +69,17 @@ public class RobotContainer {
 	public static final CommandXboxController controllerXbox = new CommandXboxController(1);
 
 	public final SendableChooser<Command> m_chooser;
-
+	public int joystickAllianceInversion = 1; //red to initialize
 	/**
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public RobotContainer() {
-
 		m_chooser = AutoBuilder.buildAutoChooser();
 		DriverStation.silenceJoystickConnectionWarning(true);
 		SmartDashboard.putData(m_chooser);
 		// registering pathplanner commands
 		NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
-		NamedCommands.registerCommand("coralIntake", new GenericCommand(m_intake, IntakeConstants.inSpeed));
+		NamedCommands.registerCommand("coralIntake", new GenericCommand(m_intake, IntakeConstants.fastSpeed));
 		NamedCommands.registerCommand("coralStop", new GenericCommand(m_intake, 0));
 		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
 		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
@@ -89,15 +89,18 @@ public class RobotContainer {
 		NamedCommands.registerCommand("elevatorL2", new GenericCommand(m_chain, 2));
 		NamedCommands.registerCommand("elevatorL3", new GenericCommand(m_chain, 3));
 		NamedCommands.registerCommand("elevatorL4", new GenericCommand(m_chain, 4));
-
 		// Configure the button bindings
 		configureButtonBindings();
+
+		//checks for joystick inversion once
+		joystickAllianceInversion = drivebase.getJoystickAllianceInversion();
+		//sets default command
 		drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
 	}
 
 	SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
-			() -> driverXbox.getLeftY() * 1,
-			() -> driverXbox.getLeftX() * 1)
+			() -> driverXbox.getLeftY() * joystickAllianceInversion, // -1 on blue, 1 on red
+			() -> driverXbox.getLeftX() * joystickAllianceInversion)
 			.withControllerRotationAxis(() -> driverXbox.getRightX() * -1)
 			.deadband(DriveConstants.deadband)
 			.scaleTranslation(0.8)
@@ -161,5 +164,6 @@ public class RobotContainer {
 		// sad losers, only having three buttons. I have so many. I am so powerful.
 		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // right trigger is in
 		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // left trigger is ou
+		driverXbox.y().whileTrue(new zeroGyro(drivebase));
 	}
 }
