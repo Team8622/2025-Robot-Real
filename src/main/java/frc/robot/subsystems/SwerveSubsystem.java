@@ -300,10 +300,10 @@ public class SwerveSubsystem extends SubsystemBase {
     
     public int getJoystickAllianceInversion(){
         if(isRedAlliance()) {
-            return -1;
+            return 1;
         }
         else {
-            return 1;
+            return -1;
         }
     }
     /**
