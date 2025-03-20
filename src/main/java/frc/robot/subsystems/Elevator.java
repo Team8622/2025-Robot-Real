@@ -75,7 +75,6 @@ public class Elevator extends GenericSubsystem {
 
         encoder = primaryMotor.getEncoder();
         bottomLimit = new DigitalInput(ElevatorConstants.limitSwitchPort);
-
         constraints = new TrapezoidProfile.Constraints(
                 ElevatorConstants.maxVelocity,
                 ElevatorConstants.maxAcceleration);
@@ -221,17 +220,17 @@ public class Elevator extends GenericSubsystem {
 
     public void setManualPower(double power) {
         // Disable PID control when in manual mode
-        pidController.reset();
-        currentState = new TrapezoidProfile.State(getHeightInches(), 0);
-        goalState = new TrapezoidProfile.State(getHeightInches(), 0);
+        // pidController.reset();
+        // currentState = new TrapezoidProfile.State(getHeightInches(), 0);
+        // goalState = new TrapezoidProfile.State(getHeightInches(), 0);
 
-        if (!isHomed && power < 0) {
-            power = 0;
-        }
+        // if (!isHomed && power < 0) {
+        //     power = 0;
+        // }
 
-        if (getHeightInches() >= ElevatorConstants.maxPos && power > 0) {
-            power = 0;
-        }
+        // if (getHeightInches() >= ElevatorConstants.maxPos && power > 0) {
+        //     power = 0;
+        // }
 
         //if (bottomLimit.get() && power < 0) {
             //power = 0;
@@ -245,7 +244,10 @@ public class Elevator extends GenericSubsystem {
         //     //primaryMotor.set(MathUtil.clamp(power, -ElevatorConstants.max_output, ElevatorConstants.max_output));
 
         // } 
+        // if (bottomLimit.get()){
         primaryMotor.set(power);
+        // }
+        
     }
     public void start (int level) {
         this.setLevel(level);

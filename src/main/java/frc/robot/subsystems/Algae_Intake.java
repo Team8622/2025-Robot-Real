@@ -27,6 +27,8 @@ import frc.robot.Constants.CANConstants;
 public class Algae_Intake extends GenericSubsystem {
 
 	public SparkMax m_lead;
+	public SparkMax m_grab;
+
 	
 	// The manipulator starts being as closed as possible (starting position)
 	// for closePos: 0 = no piece (init), 1 = cone, 2 = cube
@@ -55,6 +57,14 @@ public class Algae_Intake extends GenericSubsystem {
 				.inverted(true)
 				.idleMode(IdleMode.kBrake);
 		m_lead.configure(m_lead_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+		m_grab = new SparkMax(CANConstants.algaeGrab, MotorType.kBrushless);
+		// configure spark maxes
+		SparkMaxConfig m_grab_config = new SparkMaxConfig();
+		m_grab_config
+				.inverted(true)
+				.idleMode(IdleMode.kBrake);
+		m_grab.configure(m_grab_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 	}
 
 	@Override
@@ -64,12 +74,14 @@ public class Algae_Intake extends GenericSubsystem {
 
 	public void start(double speed) {
 		m_lead.set(speed);
+		m_grab.set(-.6);
 
 		isOn = true;
 	}
 
 	public void stop() {
 		m_lead.set(0);
+		m_grab.set(0);
 		isOn = false;
 	}
 

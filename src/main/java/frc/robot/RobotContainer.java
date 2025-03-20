@@ -29,7 +29,6 @@ import frc.robot.commands.HomeElevator;
 import frc.robot.commands.GenericCommand;
 import frc.robot.commands.IntakeAnalog;
 import frc.robot.commands.ManualControl;
-import frc.robot.commands.lockWheels;
 import frc.robot.commands.zeroGyro;
 import frc.robot.subsystems.Algae_Intake;
 import frc.robot.subsystems.Coral_Intake;
@@ -79,17 +78,17 @@ public class RobotContainer {
 		DriverStation.silenceJoystickConnectionWarning(true);
 		SmartDashboard.putData(m_chooser);
 		// registering pathplanner commands
-		// NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
-		// NamedCommands.registerCommand("coralIntake", new GenericCommand(m_intake, IntakeConstants.fastSpeed));
-		// NamedCommands.registerCommand("coralStop", new GenericCommand(m_intake, 0));
-		// NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
-		// NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
-		// NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
-		// NamedCommands.registerCommand("elevatorBottom", new GenericCommand(m_chain, 0));
-		// NamedCommands.registerCommand("elevatorL1", new GenericCommand(m_chain, 1));
-		// NamedCommands.registerCommand("elevatorL2", new GenericCommand(m_chain, 2));
-		// NamedCommands.registerCommand("elevatorL3", new GenericCommand(m_chain, 3));
-		// NamedCommands.registerCommand("elevatorL4", new GenericCommand(m_chain, 4));
+		NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
+		NamedCommands.registerCommand("coralIntake", new GenericCommand(m_intake, IntakeConstants.fastSpeed));
+		NamedCommands.registerCommand("coralStop", new GenericCommand(m_intake, 0));
+		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
+		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
+		NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
+		NamedCommands.registerCommand("elevatorBottom", new GenericCommand(m_chain, 0));
+		NamedCommands.registerCommand("elevatorL1", new GenericCommand(m_chain, 1));
+		NamedCommands.registerCommand("elevatorL2", new GenericCommand(m_chain, 2));
+		NamedCommands.registerCommand("elevatorL3", new GenericCommand(m_chain, 3));
+		NamedCommands.registerCommand("elevatorL4", new GenericCommand(m_chain, 4));
 		// Configure the button bindings
 		configureButtonBindings();
 
@@ -166,6 +165,6 @@ public class RobotContainer {
 		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.inSpeed)); // right trigger is in
 		driverXbox.leftTrigger().whileTrue(new IntakeAnalog(m_intake, IntakeConstants.outSpeed)); // left trigger is ou
 		driverXbox.y().whileTrue(new zeroGyro(drivebase));
-		driverXbox.x().whileTrue(new lockWheels(drivebase));
+
 	}
 }

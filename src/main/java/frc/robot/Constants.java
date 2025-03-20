@@ -27,6 +27,7 @@ public final class Constants {
 		public static final int intakeMain = 13;
         public static final int intakeSushi = 14;
         public static final int algaeLead = 12;
+        public static final int algaeGrab = 11;
         public static final int armsMain = 15;
         public static final int armsFollow = 16;
     }
@@ -36,7 +37,7 @@ public final class Constants {
         public static final int elevatorLead = 10;
         public static final int elevatorLeadSim = 15;
         public static final int elevatorFollow = 9;
-        public static final int limitSwitchPort = 5;
+        public static final int limitSwitchPort = 4;
         //all units should be in inches
         public static final double distanceFromGround = 21; //placeholder, measure distance from motor to the ground in inches
         public static final double L1 = 0;
@@ -83,8 +84,8 @@ public final class Constants {
     }
 
     public static final class AlgaeConstants {
-        public static final double vacuum = .08;
-        public static final double spitup = -0.08;
+        public static final double vacuum = .22;
+        public static final double spitup = -0.22;
     }
 
 
