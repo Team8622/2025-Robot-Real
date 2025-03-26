@@ -9,6 +9,24 @@
           "data": {
             "pathName": "mid short center"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralIntake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "coralStop"
+          }
         }
       ]
     }

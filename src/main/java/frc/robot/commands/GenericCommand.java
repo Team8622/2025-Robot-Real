@@ -15,6 +15,7 @@ public class GenericCommand extends Command {
     
     @Override
     public void initialize() {
+        System.out.println(setSpeed);
         if (setSpeed != 0) {
             m_subsystem.start(setSpeed);
         } else {
@@ -24,6 +25,7 @@ public class GenericCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("Hello");
         m_subsystem.stop();
     }
 }

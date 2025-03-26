@@ -78,6 +78,7 @@ public class RobotContainer {
 		DriverStation.silenceJoystickConnectionWarning(true);
 		SmartDashboard.putData(m_chooser);
 		// registering pathplanner commands
+		System.out.println("Command Time!");
 		NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
 		NamedCommands.registerCommand("coralIntake", new GenericCommand(m_intake, IntakeConstants.fastSpeed));
 		NamedCommands.registerCommand("coralStop", new GenericCommand(m_intake, 0));
