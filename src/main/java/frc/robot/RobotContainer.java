@@ -74,22 +74,19 @@ public class RobotContainer {
 	 * The container for the robot. Contains subsystems, OI devices, and commands.
 	 */
 	public RobotContainer() {
+		NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
+		NamedCommands.registerCommand("coralIntake", new IntakeAnalog(m_intake, IntakeConstants.fastSpeed));
+		NamedCommands.registerCommand("coralStop", new IntakeAnalog(m_intake, 0));
+		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
+		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
+		NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
+		NamedCommands.registerCommand("scoreL2", new ManualControl(m_chain, .1));
 		m_chooser = AutoBuilder.buildAutoChooser();
 		DriverStation.silenceJoystickConnectionWarning(true);
 		SmartDashboard.putData(m_chooser);
 		// registering pathplanner commands
 		System.out.println("Command Time!");
-		NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
-		NamedCommands.registerCommand("coralIntake", new GenericCommand(m_intake, IntakeConstants.fastSpeed));
-		NamedCommands.registerCommand("coralStop", new GenericCommand(m_intake, 0));
-		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
-		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
-		NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
-		NamedCommands.registerCommand("elevatorBottom", new GenericCommand(m_chain, 0));
-		NamedCommands.registerCommand("elevatorL1", new GenericCommand(m_chain, 1));
-		NamedCommands.registerCommand("elevatorL2", new GenericCommand(m_chain, 2));
-		NamedCommands.registerCommand("elevatorL3", new GenericCommand(m_chain, 3));
-		NamedCommands.registerCommand("elevatorL4", new GenericCommand(m_chain, 4));
+
 		// Configure the button bindings
 		configureButtonBindings();
 

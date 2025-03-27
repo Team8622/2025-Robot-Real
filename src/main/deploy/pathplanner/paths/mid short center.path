@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.2,
+        "x": 7.582375688094198,
         "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.278,
-        "y": 4.0
+        "x": 6.4217679496296585,
+        "y": 4.006415756605296
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.866,
+        "x": 5.798287286544056,
         "y": 4.0
       },
       "prevControl": {
-        "x": 6.116,
-        "y": 4.0
+        "x": 6.048183895355371,
+        "y": 4.007189221418532
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,19 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Drop Coral",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "coralIntake"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
