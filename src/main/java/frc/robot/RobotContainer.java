@@ -80,6 +80,8 @@ public class RobotContainer {
 		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
 		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
 		NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
+		NamedCommands.registerCommand("elevatorStart", new ManualControl(m_chain, .1));
+		NamedCommands.registerCommand("elevatorStop", new ManualControl(m_chain, 0));
 		NamedCommands.registerCommand("scoreL2", new ManualControl(m_chain, .1));
 		m_chooser = AutoBuilder.buildAutoChooser();
 		DriverStation.silenceJoystickConnectionWarning(true);

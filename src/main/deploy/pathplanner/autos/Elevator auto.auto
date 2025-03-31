@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Elevator test"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorStart"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorStop"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "blue auto Folder",
+  "choreoAuto": false
+}

@@ -21,11 +21,13 @@ public class ManualControl extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("Init: " + speed);
     m_elevator.setManualPower(speed);
   }
 
   @Override
   public void end(boolean interrupted){
+      System.out.println("End: " + speed);
       m_elevator.setManualPower(0);
   }
 }
