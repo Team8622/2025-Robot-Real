@@ -18,6 +18,7 @@ public class AutoControl extends Command {
   public AutoControl(Elevator subsystem, double speed, double time) {
     m_elevator = subsystem;
     setSpeed = speed;
+    setTime = time;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
