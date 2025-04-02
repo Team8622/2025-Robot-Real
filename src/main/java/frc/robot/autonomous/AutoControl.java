@@ -2,31 +2,40 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.autonomous;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ManualControl extends Command {
+public class AutoControl extends Command {
   /** Creates a new ManualControl. */
   Elevator m_elevator;
-  double speed;
-  public ManualControl(Elevator subsystem, double power) {
+  double setSpeed;
+  double setTime;
+  private final Timer timer = new Timer();
+
+  public AutoControl(Elevator subsystem, double speed, double time) {
     m_elevator = subsystem;
-    speed = power;
+    setSpeed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("Init: " + speed);
-    m_elevator.setManualPower(speed);
+    timer.reset();
+    timer.start();
+    System.out.println("Init: " + setSpeed);
+    m_elevator.setManualPower(setSpeed);
   }
-
+  @Override
+  public boolean isFinished() {
+    return timer.get() >= setTime; // Stop after 1 second
+}
   @Override
   public void end(boolean interrupted){
-      System.out.println("End: " + speed);
+      System.out.println("End: " + setSpeed);
       m_elevator.setManualPower(0);
   }
 }

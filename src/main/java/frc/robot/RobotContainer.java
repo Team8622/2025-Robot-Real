@@ -21,6 +21,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AlgaeConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.autonomous.AlgaeRemove;
+import frc.robot.autonomous.AutoControl;
+import frc.robot.autonomous.IntakeAuto;
 import frc.robot.Constants.DriveConstants;
 
 import frc.robot.commands.AlgaeAnalog;
@@ -75,14 +78,17 @@ public class RobotContainer {
 	 */
 	public RobotContainer() {
 		NamedCommands.registerCommand("coralExtake", new GenericCommand(m_intake, IntakeConstants.outSpeed));
-		NamedCommands.registerCommand("coralIntake", new IntakeAnalog(m_intake, IntakeConstants.fastSpeed));
-		NamedCommands.registerCommand("coralStop", new IntakeAnalog(m_intake, 0));
+		NamedCommands.registerCommand("coralIntake", new IntakeAuto(m_intake, IntakeConstants.fastSpeed, 3));
 		NamedCommands.registerCommand("algaeIntake", new GenericCommand(m_algae, AlgaeConstants.vacuum));
 		NamedCommands.registerCommand("algaeExtake", new GenericCommand(m_algae, AlgaeConstants.spitup));
 		NamedCommands.registerCommand("algaeStop", new GenericCommand(m_algae, 0));
-		NamedCommands.registerCommand("elevatorStart", new ManualControl(m_chain, .1));
-		NamedCommands.registerCommand("elevatorStop", new ManualControl(m_chain, 0));
-		NamedCommands.registerCommand("scoreL2", new ManualControl(m_chain, .1));
+		//Initial Elevator Up
+		NamedCommands.registerCommand("elevatorStartL2", new AutoControl(m_chain, .2, 1.95));
+		//After extake, elevator up to next level
+		NamedCommands.registerCommand("elevatorNextL3", new AutoControl(m_chain, .2, 1));
+		//Removes algae from L3
+		NamedCommands.registerCommand("algaeRemove", new AlgaeRemove(m_algae, AlgaeConstants.vacuum, 1));
+
 		m_chooser = AutoBuilder.buildAutoChooser();
 		DriverStation.silenceJoystickConnectionWarning(true);
 		SmartDashboard.putData(m_chooser);

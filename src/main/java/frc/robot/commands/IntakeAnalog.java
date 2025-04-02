@@ -16,7 +16,6 @@ public class IntakeAnalog extends Command{
     @Override
     public void initialize(){
         m_intake.start(setSpeed);
-
     }
 
     @Override

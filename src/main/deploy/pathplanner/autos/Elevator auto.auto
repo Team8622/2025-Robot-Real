@@ -13,19 +13,25 @@
         {
           "type": "named",
           "data": {
-            "name": "elevatorStart"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "name": "elevatorStartL2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "elevatorStop"
+            "name": "coralIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "elevatorNextL3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "algaeRemove"
           }
         }
       ]
