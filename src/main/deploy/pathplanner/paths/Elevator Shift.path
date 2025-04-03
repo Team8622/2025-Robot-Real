@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.583171638398161,
+        "x": 5.69720148377547,
         "y": 4.130867552186817
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.422563899933621,
-        "y": 4.137283308792112
+        "x": 5.625282121268818,
+        "y": 3.8914357136677156
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "End of elevator test"
     },
     {
       "anchor": {
-        "x": 5.69720148377547,
-        "y": 4.130867552186817
+        "x": 5.65,
+        "y": 3.94
       },
       "prevControl": {
-        "x": 5.947098092586785,
-        "y": 4.138056773605348
+        "x": 5.736794613664622,
+        "y": 4.174449770822684
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "End of elevator test"
+      "linkedName": "post shift"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 0.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -47,8 +47,8 @@
   "reversed": false,
   "folder": "blue Folder",
   "idealStartingState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

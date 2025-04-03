@@ -85,9 +85,9 @@ public class RobotContainer {
 		//Initial Elevator Up
 		NamedCommands.registerCommand("elevatorStartL2", new AutoControl(m_chain, .2, 1.95));
 		//After extake, elevator up to next level
-		NamedCommands.registerCommand("elevatorNextL3", new AutoControl(m_chain, .2, 1));
+		NamedCommands.registerCommand("elevatorNextL3", new AutoControl(m_chain, .2, 3.5));
 		//Removes algae from L3
-		NamedCommands.registerCommand("algaeRemove", new AlgaeRemove(m_algae, AlgaeConstants.vacuum, 1));
+		NamedCommands.registerCommand("algaeRemove", new AlgaeRemove(m_algae, AlgaeConstants.vacuum, 2));
 
 		m_chooser = AutoBuilder.buildAutoChooser();
 		DriverStation.silenceJoystickConnectionWarning(true);

@@ -23,15 +23,40 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Elevator Shift"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "elevatorNextL3"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "algaeRemove"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "algaeRemove"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Elevator Step Back"
+                }
+              }
+            ]
           }
         }
       ]
