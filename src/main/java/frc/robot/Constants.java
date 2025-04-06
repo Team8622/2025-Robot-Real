@@ -84,7 +84,7 @@ public final class Constants {
     }
 
     public static final class AlgaeConstants {
-        public static final double vacuum = .22;
+        public static final double vacuum = .45;
         public static final double spitup = -0.22;
     }
 

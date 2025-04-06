@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Elevator test"
+            "pathName": "Right"
           }
         },
         {
@@ -25,7 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Elevator Shift"
+            "pathName": "Right Shift"
           }
         },
         {
@@ -53,7 +53,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Elevator Step Back"
+                  "pathName": "Right Step Back"
                 }
               }
             ]

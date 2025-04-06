@@ -55,7 +55,7 @@ public class Algae_Intake extends GenericSubsystem {
 		SparkMaxConfig m_lead_config = new SparkMaxConfig();
 		m_lead_config
 				.inverted(true)
-				.idleMode(IdleMode.kBrake);
+				.idleMode(IdleMode.kCoast);
 		m_lead.configure(m_lead_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
 		m_grab = new SparkMax(CANConstants.algaeGrab, MotorType.kBrushless);
@@ -63,7 +63,7 @@ public class Algae_Intake extends GenericSubsystem {
 		SparkMaxConfig m_grab_config = new SparkMaxConfig();
 		m_grab_config
 				.inverted(true)
-				.idleMode(IdleMode.kBrake);
+				.idleMode(IdleMode.kCoast);
 		m_grab.configure(m_grab_config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 	}
 
@@ -74,8 +74,7 @@ public class Algae_Intake extends GenericSubsystem {
 
 	public void start(double speed) {
 		m_lead.set(speed);
-		m_grab.set(-.6);
-
+		m_grab.set(-1);
 		isOn = true;
 	}
 

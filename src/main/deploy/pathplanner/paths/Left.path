@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.596268653360818,
-        "y": 3.9998974025602405
+        "x": 7.543880593510188,
+        "y": 1.930569038460344
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.435660914896278,
-        "y": 4.006313159165536
+        "x": 7.294515918552505,
+        "y": 1.9127572759633678
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.592425364074209,
-        "y": 3.9998974025602405
+        "x": 5.05544775060525,
+        "y": 3.109300385099526
       },
       "prevControl": {
-        "x": 5.842321972885524,
-        "y": 4.007086623978772
+        "x": 5.267447326606522,
+        "y": 2.976800650098731
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "End of elevator test"
+      "linkedName": "end of left"
     }
   ],
   "rotationTargets": [],
@@ -42,12 +42,12 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 121.86597769360384
   },
   "reversed": false,
   "folder": "blue Folder",
   "idealStartingState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 180.0
   },
   "useDefaultConstraints": true

@@ -53,7 +53,7 @@ public class SwerveSubsystem extends SubsystemBase {
     // DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0);
 
     public SwerveSubsystem(File directory) {
-        System.out.println("Swerving!");
+        System.out.println("Swerve Initializing...");
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
         try {
             swerveDrive = new SwerveParser(directory).createSwerveDrive(maxSpeed,

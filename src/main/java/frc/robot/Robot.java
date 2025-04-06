@@ -89,7 +89,6 @@ public class Robot extends TimedRobot {
   m_visionThread.setDaemon(true);
   m_visionThread.start();
   //end camera code
-    
  
     //m_chooser.addOption("Deposit GP and move", kDepositMobility);
   }
@@ -111,11 +110,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Yaw I guess", m_robotContainer.m_PhotonCam.getVisionResultYaw().getX());
     }*/
     //RobotContainer.m_driveTrain.periodic();
-    var alliance = DriverStation.getAlliance();
-    SmartDashboard.putBoolean("Alliance present?", alliance.isPresent());
-    if (alliance.isPresent()) {
-      SmartDashboard.putBoolean("Alliance (is red?)", alliance.get() == DriverStation.Alliance.Red);
-    }
+
     CommandScheduler.getInstance().run();
     MotorSafety.checkMotors();
   }

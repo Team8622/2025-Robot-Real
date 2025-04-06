@@ -7,13 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "mid short center"
+            "pathName": "Elevator test"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "coralIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Elevator Step Back"
           }
         }
       ]
